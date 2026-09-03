@@ -26,7 +26,8 @@ class ReportService:
     def generate_report(self, req: ReportRequest) -> Dict[str, Any]:
         """Generate formatted HTML or PDF report."""
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        clean_name = req.report_type.value.lower().replace(" ", "_")
+        report_type_str = req.report_type.value if hasattr(req.report_type, "value") else str(req.report_type)
+        clean_name = report_type_str.lower().replace(" ", "_")
         filename_base = f"{clean_name}_{timestamp}"
 
         # Fetch current datasets and metrics for report
@@ -43,7 +44,7 @@ class ReportService:
         }
 
         # Render HTML
-        html_content = self._build_html_report(req.report_type, stats, models, reviews)
+        html_content = self._build_html_report(report_type_str, stats, models, reviews)
         html_file = settings.REPORTS_DIR / f"{filename_base}.html"
         with open(html_file, "w", encoding="utf-8") as f:
             f.write(html_content)
@@ -51,11 +52,11 @@ class ReportService:
         pdf_path = None
         if req.format.lower() == "pdf" and HAS_REPORTLAB:
             pdf_file = settings.REPORTS_DIR / f"{filename_base}.pdf"
-            self._build_pdf_report(pdf_file, req.report_type, stats, models, reviews)
+            self._build_pdf_report(pdf_file, report_type_str, stats, models, reviews)
             pdf_path = str(pdf_file.name)
 
         return {
-            "report_type": req.report_type.value,
+            "report_type": report_type_str,
             "format": req.format,
             "filename": pdf_path if req.format == "pdf" and pdf_path else html_file.name,
             "html_path": html_file.name,
@@ -63,7 +64,8 @@ class ReportService:
             "preview_html": html_content
         }
 
-    def _build_html_report(self, r_type: ReportType, stats: Dict, models: list, reviews: list) -> str:
+    def _build_html_report(self, r_type: Any, stats: Dict, models: list, reviews: list) -> str:
+        r_type_val = r_type.value if hasattr(r_type, "value") else str(r_type)
         models_html = ""
         for m in models:
             met = m.get("metrics", {})
@@ -96,7 +98,7 @@ class ReportService:
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{r_type.value} - Enterprise Risk Report</title>
+    <title>{r_type_val} - Enterprise Risk Report</title>
     <style>
         body {{
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -172,7 +174,7 @@ class ReportService:
 </head>
 <body>
     <div class="header">
-        <h1 class="title">{r_type.value}</h1>
+        <h1 class="title">{r_type_val}</h1>
         <div class="meta">
             Platform: AI-Powered Financial Fraud Detection &amp; Risk Analytics &bull;
             Generated: {stats['timestamp']} &bull; Author: {stats['author']}
@@ -231,8 +233,9 @@ class ReportService:
 </html>
 """
 
-    def _build_pdf_report(self, target_path: Path, r_type: ReportType, stats: Dict, models: list, reviews: list):
+    def _build_pdf_report(self, target_path: Path, r_type: Any, stats: Dict, models: list, reviews: list):
         """Construct standard PDF document via ReportLab."""
+        r_type_val = r_type.value if hasattr(r_type, "value") else str(r_type)
         doc = SimpleDocTemplate(str(target_path), pagesize=letter)
         styles = getSampleStyleSheet()
         story = []
@@ -252,7 +255,7 @@ class ReportService:
             textColor=colors.HexColor("#27272a")
         )
 
-        story.append(Paragraph(r_type.value, title_style))
+        story.append(Paragraph(r_type_val, title_style))
         story.append(Paragraph(f"Generated on {stats['timestamp']} by {stats['author']}", body_style))
         story.append(Spacer(1, 16))
 

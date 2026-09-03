@@ -18,8 +18,9 @@ def generate_report(req: ReportRequest):
     """Generate professional HTML or PDF risk and performance reports."""
     result = report_service.generate_report(req)
 
+    r_type_name = req.report_type.value if hasattr(req.report_type, "value") else str(req.report_type)
     history_service.record_action(
-        action=f"Generated report '{req.report_type.value}'",
+        action=f"Generated report '{r_type_name}'",
         category="EXPORT",
         details={"format": req.format, "file": result["filename"]}
     )

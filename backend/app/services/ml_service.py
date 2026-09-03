@@ -36,15 +36,18 @@ class MLService:
         from backend.app.services.feature_service import feature_service
         prepared_df, _ = feature_service.engineer_features(df)
 
-        available_features = [col for col in self.feature_columns if col in prepared_df.columns]
-        
-        # Fill any null values
-        X = prepared_df[available_features].fillna(0).to_numpy()
+        # Ensure all required feature columns exist in prepared_df
+        for col in self.feature_columns:
+            if col not in prepared_df.columns:
+                prepared_df[col] = 0.0
+
+        # Always select features in exact canonical order
+        X = prepared_df[self.feature_columns].fillna(0).to_numpy()
 
         if is_training:
             self.scaler.fit(X)
             # Save scaler
-            storage_service.save_model_artifact("feature_scaler", self.scaler, {"features": available_features})
+            storage_service.save_model_artifact("feature_scaler", self.scaler, {"features": self.feature_columns})
             X_scaled = self.scaler.transform(X)
         else:
             try:
@@ -54,7 +57,7 @@ class MLService:
                 X_scaled = self.scaler.fit_transform(X)
 
         y = prepared_df["is_fraud"].to_numpy() if "is_fraud" in prepared_df.columns else None
-        return X_scaled, y, available_features
+        return X_scaled, y, self.feature_columns
 
     def train_models(self, df: pd.DataFrame, req: ModelTrainRequest) -> ModelComparisonResponse:
         """Train and rigorously compare multiple machine learning algorithms."""

@@ -1,5 +1,111 @@
 [
   {
+    "id": "LOG-8A704B09",
+    "timestamp": "2026-09-03 18:07:35",
+    "action": "Generated report 'Executive Summary'",
+    "category": "EXPORT",
+    "user": "Analyst",
+    "details": {
+      "format": "html",
+      "file": "executive_summary_20260903_180735.html"
+    },
+    "status": "SUCCESS"
+  },
+  {
+    "id": "LOG-E0D033FC",
+    "timestamp": "2026-09-03 18:07:32",
+    "action": "Scored transaction TXN-295001",
+    "category": "PREDICTION",
+    "user": "Analyst",
+    "details": {
+      "amount": 185000.0,
+      "risk_score": 44,
+      "level": "MEDIUM",
+      "model": "Random Forest"
+    },
+    "status": "SUCCESS"
+  },
+  {
+    "id": "LOG-4828A663",
+    "timestamp": "2026-09-03 17:59:16",
+    "action": "Validated dataset 'sample_synthetic_transactions.csv'",
+    "category": "DATASET",
+    "user": "Analyst",
+    "details": {
+      "valid": true,
+      "passed_checks": 8,
+      "failed_checks": 0
+    },
+    "status": "SUCCESS"
+  },
+  {
+    "id": "LOG-4E1A775E",
+    "timestamp": "2026-09-03 17:58:08",
+    "action": "Generated report 'Executive Summary'",
+    "category": "EXPORT",
+    "user": "Analyst",
+    "details": {
+      "format": "html",
+      "file": "executive_summary_20260903_175808.html"
+    },
+    "status": "SUCCESS"
+  },
+  {
+    "id": "LOG-A1647C1C",
+    "timestamp": "2026-09-03 17:58:08",
+    "action": "Scored transaction TXN-295001",
+    "category": "PREDICTION",
+    "user": "Analyst",
+    "details": {
+      "amount": 185000.0,
+      "risk_score": 44,
+      "level": "MEDIUM",
+      "model": "Random Forest"
+    },
+    "status": "SUCCESS"
+  },
+  {
+    "id": "LOG-B4AC6AA5",
+    "timestamp": "2026-09-03 17:57:25",
+    "action": "Scored transaction TXN-295001",
+    "category": "PREDICTION",
+    "user": "Analyst",
+    "details": {
+      "amount": 185000.0,
+      "risk_score": 44,
+      "level": "MEDIUM",
+      "model": "Random Forest"
+    },
+    "status": "SUCCESS"
+  },
+  {
+    "id": "LOG-2C6F2AA9",
+    "timestamp": "2026-09-03 17:51:08",
+    "action": "Scored transaction TXN-295001",
+    "category": "PREDICTION",
+    "user": "Analyst",
+    "details": {
+      "amount": 185000.0,
+      "risk_score": 44,
+      "level": "MEDIUM",
+      "model": "Random Forest"
+    },
+    "status": "SUCCESS"
+  },
+  {
+    "id": "LOG-BA86B6A5",
+    "timestamp": "2026-09-03 14:44:53",
+    "action": "Validated dataset 'sample_synthetic_transactions.csv'",
+    "category": "DATASET",
+    "user": "Analyst",
+    "details": {
+      "valid": true,
+      "passed_checks": 8,
+      "failed_checks": 0
+    },
+    "status": "SUCCESS"
+  },
+  {
     "id": "LOG-527D1720",
     "timestamp": "2026-09-03 14:39:28",
     "action": "Validated dataset 'sample_synthetic_transactions.csv'",

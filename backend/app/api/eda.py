@@ -8,6 +8,7 @@ from backend.app.services.storage_service import storage_service
 router = APIRouter(prefix="/eda", tags=["EDA"])
 
 
+@router.get("/{filename}", response_model=Dict[str, Any])
 @router.get("/{filename}/summary", response_model=Dict[str, Any])
 def get_eda_summary(filename: str):
     """Retrieve statistical distributions, aggregations, and correlations for dataset."""

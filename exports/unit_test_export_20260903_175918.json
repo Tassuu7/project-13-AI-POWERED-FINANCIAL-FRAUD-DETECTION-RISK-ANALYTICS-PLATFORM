@@ -1,0 +1,12 @@
+[
+  {
+    "tx_id": "T1",
+    "amount": 500,
+    "status": "Clean"
+  },
+  {
+    "tx_id": "T2",
+    "amount": 100000,
+    "status": "Suspicious"
+  }
+]

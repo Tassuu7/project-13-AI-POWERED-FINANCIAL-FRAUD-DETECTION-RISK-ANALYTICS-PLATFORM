@@ -229,7 +229,7 @@ class ReportType(str, Enum):
 
 
 class ReportRequest(BaseModel):
-    report_type: ReportType
+    report_type: str = "Executive Risk Summary"
     format: str = "html"  # "html" or "pdf"
     title: Optional[str] = None
     author: Optional[str] = "Fraud Analytics Team"

@@ -1,7 +1,6 @@
-"""Prediction endpoints handling real-time single and batch transaction scoring."""
-
-from typing import Dict, Any, List
+from typing import Dict, Any, List, Optional
 from fastapi import APIRouter, HTTPException
+from pydantic import BaseModel, Field
 import pandas as pd
 
 from backend.app.models.schemas import SingleTransactionInput, PredictionResult, BatchPredictionRequest, SuspiciousItem, ReviewStatus
@@ -14,10 +13,32 @@ from backend.app.services.history_service import history_service
 router = APIRouter(prefix="/predictions", tags=["Predictions"])
 
 
+class FlexibleTransactionInput(BaseModel):
+    transaction_data: Optional[Dict[str, Any]] = None
+    amount: Optional[float] = 185000.0
+    transaction_type: Optional[str] = "Online"
+    merchant_category: Optional[str] = "Electronics"
+    location: Optional[str] = "Mumbai"
+    device_type: Optional[str] = "Mobile"
+    timestamp: Optional[str] = "2025-03-01 03:15:00"
+    account_age_days: Optional[int] = 180
+    transaction_frequency: Optional[int] = 2
+    previous_transaction_amount: Optional[float] = 1200.0
+    distance_from_usual_location: Optional[float] = 15.0
+    customer_id: Optional[str] = "CUST-9999"
+
+
 @router.post("/single", response_model=PredictionResult)
-def predict_single(req: SingleTransactionInput, model_name: str = None):
+def predict_single(req: FlexibleTransactionInput, model_name: str = None):
     """Run real-time fraud prediction and risk scoring for an individual transaction."""
-    tx_dict = req.model_dump()
+    if req.transaction_data:
+        tx_dict = dict(req.transaction_data)
+    else:
+        tx_dict = req.model_dump()
+        tx_dict.pop("transaction_data", None)
+
+    if "amount" not in tx_dict or tx_dict["amount"] is None:
+        tx_dict["amount"] = 1000.0
     is_suspicious, prob, used_model = ml_service.predict_single(tx_dict, model_name)
 
     result = risk_service.calculate_risk(tx_dict, prob, used_model)

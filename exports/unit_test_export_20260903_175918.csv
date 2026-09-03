@@ -1,0 +1,3 @@
+tx_id,amount,status
+T1,500,Clean
+T2,100000,Suspicious

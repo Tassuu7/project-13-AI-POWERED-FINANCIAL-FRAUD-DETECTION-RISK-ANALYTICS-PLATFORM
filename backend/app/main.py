@@ -51,23 +51,29 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Mount Routers under /api
-app.include_router(auth_router, prefix="/api")
-app.include_router(datasets_router, prefix="/api")
-app.include_router(validation_router, prefix="/api")
-app.include_router(preprocessing_router, prefix="/api")
-app.include_router(features_router, prefix="/api")
-app.include_router(eda_router, prefix="/api")
-app.include_router(models_router, prefix="/api")
-app.include_router(predictions_router, prefix="/api")
-app.include_router(risk_router, prefix="/api")
-app.include_router(transactions_router, prefix="/api")
-app.include_router(suspicious_router, prefix="/api")
-app.include_router(explainability_router, prefix="/api")
-app.include_router(reports_router, prefix="/api")
-app.include_router(exports_router, prefix="/api")
-app.include_router(history_router, prefix="/api")
-app.include_router(settings_router, prefix="/api")
+# Mount Routers under both /api and /api/v1
+all_routers = [
+    auth_router,
+    datasets_router,
+    validation_router,
+    preprocessing_router,
+    features_router,
+    eda_router,
+    models_router,
+    predictions_router,
+    risk_router,
+    transactions_router,
+    suspicious_router,
+    explainability_router,
+    reports_router,
+    exports_router,
+    history_router,
+    settings_router
+]
+
+for router_item in all_routers:
+    app.include_router(router_item, prefix="/api")
+    app.include_router(router_item, prefix="/api/v1")
 
 
 @app.get("/health")
