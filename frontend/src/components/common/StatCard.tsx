@@ -21,26 +21,26 @@ export const StatCard: React.FC<StatCardProps> = ({
   color = 'slate'
 }) => {
   const colorStyles = {
-    emerald: 'text-emerald-400 bg-emerald-950/60 border-emerald-800/40',
-    amber: 'text-amber-400 bg-amber-950/60 border-amber-800/40',
-    rose: 'text-rose-400 bg-rose-950/60 border-rose-800/40',
-    slate: 'text-slate-300 bg-slate-900/60 border-slate-700/40'
+    emerald: 'text-emerald-400 bg-emerald-950/80 border-emerald-700/60',
+    amber: 'text-amber-400 bg-amber-950/80 border-amber-700/60',
+    rose: 'text-rose-400 bg-rose-950/80 border-rose-700/60',
+    slate: 'text-slate-200 bg-slate-900/80 border-slate-700/60'
   };
 
   return (
-    <div className="bg-[#11141c] border border-[#1d2330] rounded-lg p-4 flex flex-col justify-between shadow-sm">
+    <div className="bg-[#111622] border border-[#1e2533] rounded-2xl p-5 flex flex-col justify-between shadow-md hover:border-slate-600 transition-all">
       <div className="flex items-center justify-between">
-        <span className="text-xs font-medium text-slate-400 uppercase tracking-wider">{title}</span>
-        <div className={`p-2 rounded-md border ${colorStyles[color]}`}>
-          <Icon className="w-4 h-4" />
+        <span className="text-xs md:text-sm font-extrabold text-slate-300 uppercase tracking-wider">{title}</span>
+        <div className={`p-2.5 rounded-xl border ${colorStyles[color]}`}>
+          <Icon className="w-5 h-5" />
         </div>
       </div>
-      <div className="mt-3">
-        <div className="text-2xl font-bold text-slate-100 tracking-tight font-mono">{value}</div>
+      <div className="mt-4">
+        <div className="text-3xl font-black text-slate-100 tracking-tight font-mono">{value}</div>
         {(subtitle || trend) && (
-          <div className="mt-1 flex items-center space-x-2 text-xs">
+          <div className="mt-1.5 flex items-center space-x-2 text-xs font-medium">
             {trend && (
-              <span className={`font-semibold ${trendUp ? 'text-emerald-400' : 'text-rose-400'}`}>
+              <span className={`font-bold ${trendUp ? 'text-emerald-400' : 'text-rose-400'}`}>
                 {trend}
               </span>
             )}

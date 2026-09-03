@@ -28,36 +28,36 @@ export const ProcessingHistoryPage: React.FC = () => {
   const categories = ['ALL', 'DATASET', 'MODEL', 'PREDICTION', 'REVIEW', 'EXPORT', 'SETTINGS'];
 
   return (
-    <div className="space-y-6 max-w-6xl mx-auto pb-12">
-      {/* Header Banner */}
-      <div className="bg-[#11141c] border border-[#1e2432] rounded-xl p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+    <div className="w-full space-y-8 pb-16 font-sans">
+      {/* Header Banner - Full Screen */}
+      <div className="w-full bg-[#111622] border border-[#1e2533] rounded-2xl p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-6 shadow-md">
         <div>
-          <div className="flex items-center space-x-2">
-            <Clock className="w-5 h-5 text-emerald-400" />
-            <h3 className="text-base font-bold text-slate-100">
+          <div className="flex items-center space-x-3">
+            <Clock className="w-7 h-7 text-emerald-400" />
+            <h3 className="text-xl font-bold text-slate-100">
               Processing History &amp; Immutable Audit Trail
             </h3>
           </div>
-          <p className="text-xs text-slate-400 mt-0.5">
-            Local JSON audit trail tracking model deployments, batch inference executions, and auditor triage actions.
+          <p className="text-sm text-slate-300 mt-1 font-medium">
+            Local JSON audit trail tracking model deployments, batch inference executions, threshold changes, and auditor triage actions.
           </p>
         </div>
-        <Button variant="secondary" size="sm" icon={RefreshCw} onClick={loadHistory} isLoading={isLoading}>
+        <Button variant="secondary" size="md" icon={RefreshCw} onClick={loadHistory} isLoading={isLoading}>
           Refresh Audit Trail
         </Button>
       </div>
 
       {/* Category Filter Ribbon */}
-      <div className="flex items-center space-x-2 text-xs overflow-x-auto pb-1">
-        <span className="text-slate-400 font-semibold shrink-0">Filter Event:</span>
+      <div className="flex items-center space-x-2 text-sm overflow-x-auto pb-1 w-full">
+        <span className="text-slate-400 font-bold shrink-0 mr-2">Filter Event Type:</span>
         {categories.map((c) => (
           <button
             key={c}
             onClick={() => setCategory(c)}
-            className={`px-3 py-1.5 rounded-lg font-medium transition-colors shrink-0 ${
+            className={`px-4 py-2.5 rounded-xl font-bold transition-all shrink-0 ${
               category === c
-                ? 'bg-emerald-950/60 text-emerald-400 border border-emerald-500/40 font-bold'
-                : 'text-slate-400 hover:text-slate-200 bg-[#11141c] border border-[#1e2432]'
+                ? 'bg-emerald-950 text-emerald-300 border border-emerald-500/60 shadow-sm'
+                : 'text-slate-400 hover:text-slate-200 bg-[#111622] border border-[#1e2533]'
             }`}
           >
             {c}
@@ -65,51 +65,42 @@ export const ProcessingHistoryPage: React.FC = () => {
         ))}
       </div>
 
-      {/* Audit Log Table */}
-      <div className="bg-[#11141c] border border-[#1e2432] rounded-xl overflow-hidden shadow-sm">
-        <div className="overflow-x-auto">
-          <table className="w-full text-xs text-left">
-            <thead className="bg-[#161a24] text-slate-300 font-semibold border-b border-[#1e2432]">
+      {/* Audit Log Table - Full Width */}
+      <div className="bg-[#111622] border border-[#1e2533] rounded-2xl overflow-hidden shadow-md w-full">
+        <div className="overflow-x-auto w-full">
+          <table className="w-full text-sm text-left">
+            <thead className="bg-[#141a26] text-slate-200 font-bold border-b border-[#1e2533]">
               <tr>
-                <th className="px-4 py-3">Audit ID</th>
-                <th className="px-4 py-3">Timestamp</th>
-                <th className="px-4 py-3">Category</th>
-                <th className="px-4 py-3">Action Description</th>
-                <th className="px-4 py-3">Operator</th>
-                <th className="px-4 py-3 text-right">Result</th>
+                <th className="px-5 py-4">Timestamp (UTC)</th>
+                <th className="px-5 py-4">Category</th>
+                <th className="px-5 py-4">Action Summary</th>
+                <th className="px-5 py-4">Operator</th>
+                <th className="px-5 py-4">Status</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#181d28] font-mono text-slate-300">
-              {logs.map((log) => {
-                const isSuccess = log.status === 'SUCCESS';
-
-                return (
-                  <tr key={log.id} className="hover:bg-[#141822] transition-colors">
-                    <td className="px-4 py-3 font-bold text-slate-200">{log.id}</td>
-                    <td className="px-4 py-3 text-slate-400">{log.timestamp}</td>
-                    <td className="px-4 py-3 font-sans">
-                      <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-[#171c26] text-slate-300 border border-[#222938]">
-                        {log.category}
-                      </span>
-                    </td>
-                    <td className="px-4 py-3 font-sans text-slate-200">{log.action}</td>
-                    <td className="px-4 py-3 font-sans text-emerald-400 font-medium">{log.user}</td>
-                    <td className="px-4 py-3 text-right font-sans">
-                      <span className={`inline-flex items-center space-x-1 text-[11px] font-bold ${
-                        isSuccess ? 'text-emerald-400' : 'text-amber-400'
-                      }`}>
-                        {isSuccess ? <CheckCircle2 className="w-3.5 h-3.5" /> : <AlertCircle className="w-3.5 h-3.5" />}
-                        <span>{log.status}</span>
-                      </span>
-                    </td>
-                  </tr>
-                );
-              })}
-
+            <tbody className="divide-y divide-[#181f2e] font-mono text-slate-200">
+              {logs.map((log, idx) => (
+                <tr key={idx} className="hover:bg-[#141c29] transition-colors">
+                  <td className="px-5 py-4 text-xs text-slate-400 whitespace-nowrap">{log.timestamp}</td>
+                  <td className="px-5 py-4">
+                    <span className="px-2.5 py-1 rounded-lg text-xs font-black bg-slate-800 text-slate-300 border border-slate-700">
+                      {log.category}
+                    </span>
+                  </td>
+                  <td className="px-5 py-4 text-slate-100 font-sans font-medium">{log.action}</td>
+                  <td className="px-5 py-4 text-emerald-400 font-bold">{log.user || 'system'}</td>
+                  <td className="px-5 py-4">
+                    <span className="inline-flex items-center space-x-1.5 text-xs text-emerald-400 font-bold">
+                      <CheckCircle2 className="w-4 h-4" />
+                      <span>{log.status || 'SUCCESS'}</span>
+                    </span>
+                  </td>
+                </tr>
+              ))}
               {logs.length === 0 && (
                 <tr>
-                  <td colSpan={6} className="px-4 py-8 text-center text-slate-500 font-sans">
-                    No processing events recorded for category '{category}'.
+                  <td colSpan={5} className="p-12 text-center text-slate-400 font-sans text-sm">
+                    No audit records recorded in this category.
                   </td>
                 </tr>
               )}

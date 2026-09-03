@@ -100,10 +100,13 @@ class StorageService:
     def list_trained_models(self) -> List[Dict[str, Any]]:
         models = []
         for meta_file in self.models_dir.glob("*_meta.json"):
+            if "feature_scaler" in meta_file.name:
+                continue
             try:
                 with open(meta_file, "r", encoding="utf-8") as f:
                     meta = json.load(f)
-                models.append(meta)
+                if "model_name" in meta:
+                    models.append(meta)
             except Exception as e:
                 logger.warning(f"Failed to read model meta {meta_file}: {e}")
         return models

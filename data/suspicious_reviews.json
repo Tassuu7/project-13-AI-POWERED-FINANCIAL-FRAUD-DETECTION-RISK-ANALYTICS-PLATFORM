@@ -1,1 +1,25 @@
-[]
+[
+  {
+    "transaction_id": "TXN-295001",
+    "customer_id": "CUST-VERIFIED",
+    "amount": 185000.0,
+    "timestamp": "2025-03-01 03:15:00",
+    "location": "Mumbai",
+    "device_type": "Unknown Device",
+    "risk_score": 99,
+    "risk_level": "HIGH",
+    "review_status": "Under Review",
+    "review_notes": "[2026-09-03 21:34:00 - admin]:",
+    "assigned_analyst": "Unassigned",
+    "last_updated": "",
+    "flags": [
+      "Extreme Amount Surge",
+      "Anomalous Transaction Time",
+      "Severe Geographic Displacement",
+      "Untrusted Device Fingerprint",
+      "Rapid Transaction Velocity",
+      "High-Liquidity Merchant Category",
+      "New Account Velocity"
+    ]
+  }
+]

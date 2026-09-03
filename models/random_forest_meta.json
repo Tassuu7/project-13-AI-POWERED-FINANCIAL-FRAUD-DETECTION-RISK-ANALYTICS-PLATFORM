@@ -1,7 +1,7 @@
 {
   "model_name": "Random Forest",
   "dataset_name": "in_memory_test.csv",
-  "trained_at": "2026-09-03 21:22:25",
+  "trained_at": "2026-09-03 22:06:35",
   "features": [
     "amount",
     "account_age_days",
@@ -24,7 +24,7 @@
     "recall": 1.0,
     "f1_score": 1.0,
     "roc_auc": 1.0,
-    "training_time_seconds": 0.562,
+    "training_time_seconds": 0.544,
     "confusion_matrix": [
       [
         27,

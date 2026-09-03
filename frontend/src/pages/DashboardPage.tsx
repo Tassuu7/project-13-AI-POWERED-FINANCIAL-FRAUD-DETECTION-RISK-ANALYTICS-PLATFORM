@@ -67,26 +67,26 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
   // ==========================================
   if (isAdmin) {
     return (
-      <div className="space-y-6 max-w-7xl mx-auto pb-12">
+      <div className="w-full space-y-8 pb-16 font-sans">
         {/* Admin Header */}
-        <div className="bg-[#11141c] border border-[#1e2432] rounded-xl p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-sm">
+        <div className="w-full bg-[#111622] border border-[#1e2533] rounded-2xl p-6 flex flex-col md:flex-row md:items-center justify-between gap-6 shadow-md">
           <div>
-            <div className="flex items-center space-x-2">
-              <span className="px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800/40 text-[10px] font-bold font-mono">
+            <div className="flex items-center space-x-2.5">
+              <span className="px-3 py-1 rounded-lg bg-emerald-950 text-emerald-300 border border-emerald-700/60 text-xs font-black font-mono tracking-wider">
                 ADMIN CONSOLE
               </span>
-              <span className="text-slate-500 text-xs font-mono">&bull; Active Dataset: {selectedDataset}</span>
+              <span className="text-slate-400 text-sm font-mono">&bull; Active Dataset: {selectedDataset}</span>
             </div>
-            <h2 className="text-lg font-bold text-slate-100 mt-1">Welcome, Administrator</h2>
-            <p className="text-xs text-slate-400">
+            <h2 className="text-2xl font-black text-slate-100 mt-2">Welcome, Administrator</h2>
+            <p className="text-sm text-slate-300 mt-1 font-medium">
               Complete administrative overview of financial fraud operations, machine learning model telemetry, and system throughput.
             </p>
           </div>
-          <div className="flex items-center space-x-3">
-            <Button variant="secondary" size="sm" icon={RefreshCw} onClick={loadTelemetry} isLoading={isLoading}>
-              Refresh
+          <div className="flex items-center space-x-3 shrink-0">
+            <Button variant="secondary" size="md" icon={RefreshCw} onClick={loadTelemetry} isLoading={isLoading}>
+              Refresh Telemetry
             </Button>
-            <Button variant="primary" size="sm" icon={FileSpreadsheet} onClick={() => onNavigate('analyze')}>
+            <Button variant="primary" size="md" icon={FileSpreadsheet} onClick={() => onNavigate('analyze')}>
               Transaction Analysis
             </Button>
           </div>
@@ -253,23 +253,23 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
   // ==========================================
   if (isAnalyst) {
     return (
-      <div className="space-y-6 max-w-7xl mx-auto pb-12">
+      <div className="w-full space-y-8 pb-16 font-sans">
         {/* Analyst Header */}
-        <div className="bg-[#11141c] border border-[#1e2432] rounded-xl p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-sm">
+        <div className="w-full bg-[#111622] border border-[#1e2533] rounded-2xl p-6 flex flex-col md:flex-row md:items-center justify-between gap-6 shadow-md">
           <div>
-            <div className="flex items-center space-x-2">
-              <span className="px-2 py-0.5 rounded bg-amber-950 text-amber-400 border border-amber-800/40 text-[10px] font-bold font-mono">
+            <div className="flex items-center space-x-2.5">
+              <span className="px-3 py-1 rounded-lg bg-amber-950 text-amber-300 border border-amber-700/60 text-xs font-black font-mono tracking-wider">
                 INVESTIGATION TRIAGE
               </span>
-              <span className="text-slate-500 text-xs font-mono">&bull; Shift Status: Active</span>
+              <span className="text-slate-400 text-sm font-mono">&bull; Shift Status: Active</span>
             </div>
-            <h2 className="text-lg font-bold text-slate-100 mt-1">Fraud Analyst Operational Dashboard</h2>
-            <p className="text-xs text-slate-400">
-              Prioritized caseload queue. Identify high-risk transactions requiring secondary verification, card freezes, or clearance.
+            <h2 className="text-2xl font-black text-slate-100 mt-2">Fraud Analyst Operational Dashboard</h2>
+            <p className="text-sm text-slate-300 mt-1 font-medium">
+              Prioritized caseload queue. Identify high-risk transactions requiring secondary verification, investigation review, or clearance.
             </p>
           </div>
-          <div className="flex items-center space-x-3">
-            <Button variant="primary" size="sm" icon={ShieldAlert} onClick={() => onNavigate('investigations')}>
+          <div className="flex items-center space-x-3 shrink-0">
+            <Button variant="primary" size="md" icon={ShieldAlert} onClick={() => onNavigate('investigations')}>
               Open Investigation Desk
             </Button>
           </div>
@@ -370,23 +370,23 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
   // 3. MANAGEMENT / VIEWER DASHBOARD
   // ==========================================
   return (
-    <div className="space-y-6 max-w-7xl mx-auto pb-12">
+    <div className="w-full space-y-8 pb-16 font-sans">
       {/* Viewer Header */}
-      <div className="bg-[#11141c] border border-[#1e2432] rounded-xl p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-sm">
+      <div className="w-full bg-[#111622] border border-[#1e2533] rounded-2xl p-6 flex flex-col md:flex-row md:items-center justify-between gap-6 shadow-md">
         <div>
-          <div className="flex items-center space-x-2">
-            <span className="px-2 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700 text-[10px] font-bold font-mono">
+          <div className="flex items-center space-x-2.5">
+            <span className="px-3 py-1 rounded-lg bg-slate-800 text-slate-200 border border-slate-600 text-xs font-black font-mono tracking-wider">
               EXECUTIVE RISK OVERVIEW
             </span>
-            <span className="text-slate-500 text-xs font-mono">&bull; Read-Only Reporting Access</span>
+            <span className="text-slate-400 text-sm font-mono">&bull; Read-Only Reporting Access</span>
           </div>
-          <h2 className="text-lg font-bold text-slate-100 mt-1">Financial Risk &amp; Loss Exposure Summary</h2>
-          <p className="text-xs text-slate-400">
+          <h2 className="text-2xl font-black text-slate-100 mt-2">Financial Risk &amp; Loss Exposure Summary</h2>
+          <p className="text-sm text-slate-300 mt-1 font-medium">
             High-level executive metrics detailing overall portfolio health, intercepted fraud exposure, and risk mitigation trends.
           </p>
         </div>
-        <div className="flex items-center space-x-3">
-          <Button variant="primary" size="sm" icon={Eye} onClick={() => onNavigate('reports')}>
+        <div className="flex items-center space-x-3 shrink-0">
+          <Button variant="primary" size="md" icon={Eye} onClick={() => onNavigate('reports')}>
             Executive Reports
           </Button>
         </div>

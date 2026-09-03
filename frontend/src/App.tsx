@@ -66,8 +66,8 @@ const MainLayout: React.FC = () => {
         {/* Header */}
         <Header pageTitle={meta.title} pageSubtitle={meta.subtitle} />
 
-        {/* Dynamic View */}
-        <main className="flex-1 overflow-y-auto p-6">
+        {/* Dynamic View (Full Screen Responsive) */}
+        <main className="flex-1 overflow-y-auto p-8 w-full">
           {activePage === 'dashboard' && <DashboardPage onNavigate={setActivePage} />}
           {activePage === 'analyze' && <TransactionAnalysisPage />}
           {activePage === 'fraud-analysis' && <FraudAnalysisPage />}

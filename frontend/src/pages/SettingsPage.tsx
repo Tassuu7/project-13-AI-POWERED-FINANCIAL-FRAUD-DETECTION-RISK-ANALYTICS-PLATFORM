@@ -43,117 +43,105 @@ export const SettingsPage: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6 max-w-5xl mx-auto pb-12">
-      {/* Header Banner */}
-      <div className="bg-[#11141c] border border-[#1e2432] rounded-xl p-6 flex items-center space-x-3">
-        <div className="w-10 h-10 rounded-lg bg-emerald-950/80 border border-emerald-500/30 flex items-center justify-center text-emerald-400 shrink-0">
-          <SettingsIcon className="w-5 h-5" />
+    <div className="w-full space-y-8 pb-16 font-sans">
+      {/* Header Banner - Full Screen */}
+      <div className="w-full bg-[#111622] border border-[#1e2533] rounded-2xl p-6 flex items-center space-x-4 shadow-md">
+        <div className="w-12 h-12 rounded-2xl bg-emerald-950/80 border border-emerald-500/40 flex items-center justify-center text-emerald-400 shrink-0 shadow-sm">
+          <SettingsIcon className="w-7 h-7" />
         </div>
         <div>
-          <h3 className="text-base font-bold text-slate-100">Platform Settings &amp; Architecture Control</h3>
-          <p className="text-xs text-slate-400 mt-0.5">
-            Configure risk classification boundaries, active model defaults, and local filesystem retention.
+          <h3 className="text-xl font-bold text-slate-100">Platform Settings &amp; Architecture Control</h3>
+          <p className="text-sm text-slate-300 mt-1 font-medium">
+            Configure risk classification boundaries, active model defaults, and local filesystem retention rules.
           </p>
         </div>
       </div>
 
       {/* Grid Configuration Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Risk Thresholds Card */}
-        <div className="bg-[#11141c] border border-[#1e2432] rounded-xl p-6 shadow-sm space-y-4">
-          <div className="flex items-center space-x-2 pb-3 border-b border-[#1e2432]">
-            <Shield className="w-4 h-4 text-emerald-400" />
-            <h4 className="text-xs font-bold text-slate-200 uppercase tracking-wider">
-              Risk Score Classification Boundaries
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 w-full">
+        {/* Risk Threshold Calibration Form */}
+        <div className="bg-[#111622] border border-[#1e2533] rounded-2xl p-7 space-y-6 shadow-md">
+          <div className="flex items-center space-x-3 pb-4 border-b border-[#1e2533]">
+            <Shield className="w-6 h-6 text-emerald-400" />
+            <h4 className="text-base font-bold text-slate-100 uppercase tracking-wider">
+              Risk Severity Boundary Tuning
             </h4>
           </div>
 
-          <form onSubmit={handleSaveThresholds} className="space-y-4 text-xs">
+          <form onSubmit={handleSaveThresholds} className="space-y-6 text-sm">
             <div>
-              <label className="block text-slate-300 font-semibold mb-1">
-                Low Risk Max Boundary (0 – Low Max)
-              </label>
+              <div className="flex justify-between mb-2">
+                <label className="font-bold text-slate-200">
+                  Low Risk Upper Cutoff (Current: {lowMax}/100)
+                </label>
+                <span className="text-emerald-400 font-mono font-black text-base">0 &ndash; {lowMax}</span>
+              </div>
               <input
-                type="number"
+                type="range"
+                min={10}
+                max={50}
                 value={lowMax}
                 onChange={(e) => setLowMax(Number(e.target.value))}
-                className="w-full bg-[#0b0e14] border border-[#232a3b] rounded-lg px-3 py-2 text-slate-100 font-mono focus:border-emerald-500 focus:outline-none"
+                className="w-full accent-emerald-500 h-2 bg-[#0b0e14] rounded-lg cursor-pointer"
               />
+              <span className="text-xs text-slate-400 mt-1 block">
+                Transactions below this score are classified as Normal (Verified).
+              </span>
             </div>
 
             <div>
-              <label className="block text-slate-300 font-semibold mb-1">
-                Medium Risk Max Boundary (Low Max+1 – Med Max)
-              </label>
+              <div className="flex justify-between mb-2">
+                <label className="font-bold text-slate-200">
+                  Medium Risk Upper Cutoff (Current: {medMax}/100)
+                </label>
+                <span className="text-amber-400 font-mono font-black text-base">{lowMax + 1} &ndash; {medMax}</span>
+              </div>
               <input
-                type="number"
+                type="range"
+                min={51}
+                max={90}
                 value={medMax}
                 onChange={(e) => setMedMax(Number(e.target.value))}
-                className="w-full bg-[#0b0e14] border border-[#232a3b] rounded-lg px-3 py-2 text-slate-100 font-mono focus:border-emerald-500 focus:outline-none"
+                className="w-full accent-amber-500 h-2 bg-[#0b0e14] rounded-lg cursor-pointer"
               />
+              <span className="text-xs text-slate-400 mt-1 block">
+                Transactions between {lowMax + 1} and {medMax} are routed to Medium review. Transactions &gt; {medMax} trigger High Alert.
+              </span>
             </div>
 
             <div className="pt-2 flex justify-end">
-              <Button type="submit" variant="primary" size="sm" icon={Save} isLoading={isSaving}>
-                Save Boundaries
+              <Button type="submit" variant="primary" icon={Save} isLoading={isSaving} className="py-3 px-6 text-sm font-bold shadow-lg">
+                Persist Threshold Configuration
               </Button>
             </div>
           </form>
         </div>
 
-        {/* Theme & Visual Compliance Card */}
-        <div className="bg-[#11141c] border border-[#1e2432] rounded-xl p-6 shadow-sm space-y-4">
-          <div className="flex items-center space-x-2 pb-3 border-b border-[#1e2432]">
-            <Palette className="w-4 h-4 text-emerald-400" />
-            <h4 className="text-xs font-bold text-slate-200 uppercase tracking-wider">
-              Design &amp; Theme Compliance
+        {/* Local-First Architecture Specifications */}
+        <div className="bg-[#111622] border border-[#1e2533] rounded-2xl p-7 space-y-6 shadow-md">
+          <div className="flex items-center space-x-3 pb-4 border-b border-[#1e2533]">
+            <Database className="w-6 h-6 text-emerald-400" />
+            <h4 className="text-base font-bold text-slate-100 uppercase tracking-wider">
+              Local Storage Environment Diagnostics
             </h4>
           </div>
 
-          <div className="space-y-3 text-xs text-slate-400">
-            <div className="flex justify-between py-1.5 border-b border-[#181d28]">
-              <span>Active Palette:</span>
-              <span className="font-bold text-slate-200">Dark Obsidian &amp; Charcoal Slate</span>
+          <div className="space-y-4 text-sm font-mono">
+            <div className="p-4 rounded-xl bg-[#0b0e14] border border-[#1e2533] flex justify-between items-center">
+              <span className="text-slate-400 font-sans">Database Driver:</span>
+              <span className="text-emerald-400 font-bold">None (Local JSON / CSV / Joblib)</span>
             </div>
-            <div className="flex justify-between py-1.5 border-b border-[#181d28]">
-              <span>Primary Brand Accent:</span>
-              <span className="font-bold text-emerald-400">Emerald Green (#10b981)</span>
+            <div className="p-4 rounded-xl bg-[#0b0e14] border border-[#1e2533] flex justify-between items-center">
+              <span className="text-slate-400 font-sans">Model Serialization:</span>
+              <span className="text-slate-200 font-bold">models/*.joblib (Scikit-Learn)</span>
             </div>
-            <div className="flex justify-between py-1.5 border-b border-[#181d28]">
-              <span>Blue Color Prohibition:</span>
-              <span className="text-emerald-400 font-bold flex items-center space-x-1">
-                <CheckCircle2 className="w-3.5 h-3.5" />
-                <span>Strictly Enforced (0% Blue)</span>
-              </span>
+            <div className="p-4 rounded-xl bg-[#0b0e14] border border-[#1e2533] flex justify-between items-center">
+              <span className="text-slate-400 font-sans">External Cloud AI Keys:</span>
+              <span className="text-emerald-400 font-bold">Disabled (100% Local Inference)</span>
             </div>
-            <div className="flex justify-between py-1.5 border-b border-[#181d28]">
-              <span>Iconography Standard:</span>
-              <span className="text-slate-200 font-semibold">Standard Lucide Vector SVGs</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Local Storage Card */}
-        <div className="bg-[#11141c] border border-[#1e2432] rounded-xl p-6 shadow-sm space-y-4 md:col-span-2">
-          <div className="flex items-center space-x-2 pb-3 border-b border-[#1e2432]">
-            <Database className="w-4 h-4 text-emerald-400" />
-            <h4 className="text-xs font-bold text-slate-200 uppercase tracking-wider">
-              Local Storage Architecture &amp; Database-Free Persistence
-            </h4>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs font-mono">
-            <div className="bg-[#0b0e14] p-3 rounded border border-[#1e2432]">
-              <span className="text-slate-500 font-sans block text-[11px]">Datasets Directory</span>
-              <span className="text-slate-300 font-bold mt-1 block">data/</span>
-            </div>
-            <div className="bg-[#0b0e14] p-3 rounded border border-[#1e2432]">
-              <span className="text-slate-500 font-sans block text-[11px]">Serialized Models</span>
-              <span className="text-emerald-400 font-bold mt-1 block">models/*.joblib</span>
-            </div>
-            <div className="bg-[#0b0e14] p-3 rounded border border-[#1e2432]">
-              <span className="text-slate-500 font-sans block text-[11px]">Reports &amp; Exports</span>
-              <span className="text-amber-400 font-bold mt-1 block">reports/ &bull; exports/</span>
+            <div className="p-4 rounded-xl bg-[#0b0e14] border border-[#1e2533] flex justify-between items-center">
+              <span className="text-slate-400 font-sans">Enterprise Palette:</span>
+              <span className="text-slate-200 font-bold">Obsidian &bull; Emerald &bull; Amber &bull; Crimson</span>
             </div>
           </div>
         </div>

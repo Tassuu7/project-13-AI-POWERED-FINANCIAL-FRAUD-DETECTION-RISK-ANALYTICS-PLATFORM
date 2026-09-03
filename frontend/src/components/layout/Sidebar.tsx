@@ -37,7 +37,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activePage, setActivePage, onL
     { id: 'models', label: 'Model Management', icon: Sliders, roles: ['Administrator'] },
     { id: 'history', label: 'Processing History', icon: Clock, roles: ['Administrator'] },
     { id: 'settings', label: 'Settings', icon: SettingsIcon, roles: ['Administrator'] },
-    { id: 'help', label: 'Help', icon: HelpCircle, roles: ['Administrator', 'Fraud Analyst', 'Management / Viewer'] },
+    { id: 'help', label: 'Help Documentation', icon: HelpCircle, roles: ['Administrator', 'Fraud Analyst', 'Management / Viewer'] },
   ];
 
   const userRole = user?.role || 'Administrator';
@@ -45,36 +45,36 @@ export const Sidebar: React.FC<SidebarProps> = ({ activePage, setActivePage, onL
   const visibleSystem = systemNavItems.filter((i) => i.roles.includes(userRole));
 
   return (
-    <aside className="w-64 bg-[#0a0d13] border-r border-[#1a202c] flex flex-col justify-between h-full select-none shrink-0 font-sans">
+    <aside className="w-72 bg-[#090c12] border-r border-[#1e2533] flex flex-col justify-between h-full select-none shrink-0 font-sans shadow-xl">
       <div className="flex flex-col flex-1 min-h-0 overflow-y-auto">
-        {/* Brand Header */}
-        <div className="p-5 border-b border-[#1a202c] flex items-center space-x-3">
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-emerald-500/20 to-emerald-950/60 border border-emerald-500/30 flex items-center justify-center text-emerald-400 shrink-0 shadow-sm">
-            <Shield className="w-5 h-5" />
+        {/* Large Prominent Brand Header */}
+        <div className="p-6 border-b border-[#1e2533] flex items-center space-x-3.5 bg-[#0e121a]">
+          <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-emerald-500/25 to-emerald-950/80 border border-emerald-500/40 flex items-center justify-center text-emerald-400 shrink-0 shadow-md ring-1 ring-emerald-500/30">
+            <Shield className="w-7 h-7" />
           </div>
           <div className="min-w-0">
-            <h1 className="text-xs font-black tracking-widest text-slate-100 uppercase font-mono truncate">
+            <h1 className="text-base font-black tracking-widest text-slate-100 uppercase font-mono truncate leading-tight">
               AEGIS FRAUD LABS
             </h1>
-            <span className="text-[10px] text-slate-500 font-medium block">
-              Risk &amp; Analytics Platform
+            <span className="text-xs text-emerald-400 font-bold tracking-wider uppercase block mt-0.5">
+              FinTech Risk Engine
             </span>
           </div>
         </div>
 
         {/* Current Operator Profile Pill */}
-        <div className="p-3 mx-3 my-3 bg-[#11141c] border border-[#1e2432] rounded-xl flex items-center space-x-3">
-          <div className="w-8 h-8 rounded-lg bg-[#181d28] border border-[#252e40] flex items-center justify-center text-emerald-400 font-bold text-xs font-mono shrink-0">
+        <div className="p-4 mx-4 my-4 bg-[#111622] border border-[#232b3d] rounded-xl flex items-center space-x-3.5 shadow-sm">
+          <div className="w-10 h-10 rounded-xl bg-[#182030] border border-[#2d3850] flex items-center justify-center text-emerald-400 font-bold text-sm font-mono shrink-0">
             {user?.username?.slice(0, 2).toUpperCase() || 'OP'}
           </div>
           <div className="min-w-0 flex-1">
-            <span className="text-xs font-bold text-slate-200 block truncate font-mono">
+            <span className="text-sm font-bold text-slate-100 block truncate font-mono">
               {user?.username || 'Operator'}
             </span>
-            <span className={`inline-block text-[10px] font-bold rounded px-1.5 py-0.2 mt-0.5 ${
-              isAdmin ? 'bg-emerald-950 text-emerald-400 border border-emerald-800/40' :
-              isAnalyst ? 'bg-amber-950 text-amber-400 border border-amber-800/40' :
-              'bg-slate-800 text-slate-300 border border-slate-700'
+            <span className={`inline-block text-xs font-bold rounded-md px-2 py-0.5 mt-1 ${
+              isAdmin ? 'bg-emerald-950/80 text-emerald-300 border border-emerald-700/50' :
+              isAnalyst ? 'bg-amber-950/80 text-amber-300 border border-amber-700/50' :
+              'bg-slate-800 text-slate-200 border border-slate-600'
             }`}>
               {userRole}
             </span>
@@ -82,11 +82,11 @@ export const Sidebar: React.FC<SidebarProps> = ({ activePage, setActivePage, onL
         </div>
 
         {/* Navigation Sections */}
-        <nav className="p-3 space-y-5">
+        <nav className="p-4 space-y-6">
           {/* MAIN Section */}
-          <div className="space-y-1">
-            <span className="px-3 text-[10px] font-bold tracking-wider text-slate-500 uppercase font-mono">
-              MAIN
+          <div className="space-y-1.5">
+            <span className="px-3 text-xs font-extrabold tracking-widest text-slate-400 uppercase font-mono block mb-2">
+              PRIMARY MODULES
             </span>
             {visibleMain.map((item) => {
               const Icon = item.icon;
@@ -95,13 +95,13 @@ export const Sidebar: React.FC<SidebarProps> = ({ activePage, setActivePage, onL
                 <button
                   key={item.id}
                   onClick={() => setActivePage(item.id)}
-                  className={`w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-xs font-medium transition-all ${
+                  className={`w-full flex items-center space-x-3.5 px-3.5 py-3 rounded-xl text-sm font-semibold transition-all ${
                     isActive
-                      ? 'bg-emerald-950/60 text-emerald-400 border border-emerald-500/30 font-semibold shadow-sm'
-                      : 'text-slate-400 hover:text-slate-200 hover:bg-[#121620]'
+                      ? 'bg-emerald-950/80 text-emerald-300 border border-emerald-500/50 font-bold shadow-md ring-1 ring-emerald-500/20'
+                      : 'text-slate-300 hover:text-white hover:bg-[#141a26]'
                   }`}
                 >
-                  <Icon className={`w-4 h-4 shrink-0 ${isActive ? 'text-emerald-400' : 'text-slate-500'}`} />
+                  <Icon className={`w-5 h-5 shrink-0 ${isActive ? 'text-emerald-400' : 'text-slate-400'}`} />
                   <span className="truncate">{item.label}</span>
                 </button>
               );
@@ -110,9 +110,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ activePage, setActivePage, onL
 
           {/* SYSTEM or HELP Section */}
           {visibleSystem.length > 0 && (
-            <div className="space-y-1">
-              <span className="px-3 text-[10px] font-bold tracking-wider text-slate-500 uppercase font-mono">
-                {isAdmin ? 'SYSTEM' : 'HELP'}
+            <div className="space-y-1.5">
+              <span className="px-3 text-xs font-extrabold tracking-widest text-slate-400 uppercase font-mono block mb-2">
+                {isAdmin ? 'ADMINISTRATION' : 'RESOURCES'}
               </span>
               {visibleSystem.map((item) => {
                 const Icon = item.icon;
@@ -121,13 +121,13 @@ export const Sidebar: React.FC<SidebarProps> = ({ activePage, setActivePage, onL
                   <button
                     key={item.id}
                     onClick={() => setActivePage(item.id)}
-                    className={`w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-xs font-medium transition-all ${
+                    className={`w-full flex items-center space-x-3.5 px-3.5 py-3 rounded-xl text-sm font-semibold transition-all ${
                       isActive
-                        ? 'bg-emerald-950/60 text-emerald-400 border border-emerald-500/30 font-semibold shadow-sm'
-                        : 'text-slate-400 hover:text-slate-200 hover:bg-[#121620]'
+                        ? 'bg-emerald-950/80 text-emerald-300 border border-emerald-500/50 font-bold shadow-md ring-1 ring-emerald-500/20'
+                        : 'text-slate-300 hover:text-white hover:bg-[#141a26]'
                     }`}
                   >
-                    <Icon className={`w-4 h-4 shrink-0 ${isActive ? 'text-emerald-400' : 'text-slate-500'}`} />
+                    <Icon className={`w-5 h-5 shrink-0 ${isActive ? 'text-emerald-400' : 'text-slate-400'}`} />
                     <span className="truncate">{item.label}</span>
                   </button>
                 );
@@ -138,13 +138,13 @@ export const Sidebar: React.FC<SidebarProps> = ({ activePage, setActivePage, onL
       </div>
 
       {/* Logout Footer */}
-      <div className="p-3 border-t border-[#1a202c]">
+      <div className="p-4 border-t border-[#1e2533] bg-[#0c1017]">
         <button
           onClick={onLogout}
-          className="w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-xs font-semibold text-rose-400 hover:text-rose-300 hover:bg-rose-950/30 border border-transparent hover:border-rose-800/40 transition-all"
+          className="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-bold text-rose-400 hover:text-rose-200 hover:bg-rose-950/40 border border-rose-900/40 hover:border-rose-700/60 transition-all shadow-sm"
         >
-          <LogOut className="w-4 h-4" />
-          <span>Sign Out</span>
+          <LogOut className="w-5 h-5" />
+          <span>Sign Out / Lock Session</span>
         </button>
       </div>
     </aside>

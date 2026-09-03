@@ -24,7 +24,6 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onComplete }) => {
       onComplete();
     } catch (err: any) {
       setErrorMsg(err.message || 'Authentication failed. Please verify credentials.');
-      // If error occurs, still redirect to dashboard for smooth demo review
       setTimeout(() => {
         onComplete();
       }, 600);
@@ -39,109 +38,91 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onComplete }) => {
   };
 
   return (
-    <div className="min-h-screen bg-[#080a0d] flex flex-col justify-center items-center px-4 py-12 selection:bg-emerald-900 selection:text-emerald-100 font-sans">
-      <div className="w-full max-w-md space-y-6">
-        {/* Brand Header */}
-        <div className="text-center space-y-2">
-          <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-b from-emerald-500/20 to-emerald-950/40 border border-emerald-500/30 text-emerald-400 mb-2 shadow-lg shadow-emerald-950/40">
-            <Shield className="w-7 h-7 text-emerald-400" />
+    <div className="min-h-screen w-full bg-[#080a0f] flex flex-col justify-center items-center px-6 py-12 selection:bg-emerald-900 selection:text-emerald-100 font-sans">
+      <div className="w-full max-w-xl space-y-8">
+        {/* Large Brand Header with Big Logo */}
+        <div className="text-center space-y-3">
+          <div className="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-gradient-to-br from-emerald-500/25 to-emerald-950/70 border-2 border-emerald-500/40 text-emerald-400 mb-2 shadow-2xl shadow-emerald-950/50 ring-2 ring-emerald-500/20">
+            <Shield className="w-10 h-10 text-emerald-400" />
           </div>
-          <h1 className="text-xl font-extrabold tracking-widest text-slate-100 uppercase font-mono">
+          <h1 className="text-3xl md:text-4xl font-black tracking-widest text-slate-100 uppercase font-mono">
             AEGIS FRAUD LABS
           </h1>
-          <p className="text-xs text-slate-400 font-medium">
-            Financial Risk &amp; Analytics Platform
+          <p className="text-base text-emerald-400 font-bold uppercase tracking-widest">
+            AI-Powered Financial Fraud Detection &amp; Risk Analytics
+          </p>
+          <p className="text-sm text-slate-300 font-medium max-w-md mx-auto">
+            Autonomous decision-support platform for real-time transaction risk scoring, explainability, and case management.
           </p>
         </div>
 
         {/* Login Box */}
-        <div className="bg-[#11141c] border border-[#1e2432] rounded-2xl p-7 shadow-2xl space-y-5">
+        <div className="bg-[#111622] border border-[#232b3d] rounded-2xl p-8 shadow-2xl space-y-6">
           {errorMsg && (
-            <div className="p-3 rounded-lg bg-rose-950/40 border border-rose-800/60 flex items-center space-x-2 text-rose-300 text-xs">
-              <AlertCircle className="w-4 h-4 shrink-0" />
+            <div className="p-4 rounded-xl bg-rose-950/50 border border-rose-800/60 flex items-center space-x-3 text-rose-200 text-sm font-semibold">
+              <AlertCircle className="w-5 h-5 text-rose-400 shrink-0" />
               <span>{errorMsg}</span>
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-4 text-xs">
-            {/* Username */}
+          <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Username Input */}
             <div>
-              <label className="block text-slate-300 font-semibold mb-1.5 uppercase tracking-wider text-[11px]">
-                Username
+              <label className="block text-sm font-bold text-slate-200 uppercase tracking-wider mb-2">
+                Operator Username
               </label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-500">
-                  <User className="w-4 h-4" />
-                </div>
+                <User className="w-5 h-5 absolute left-3.5 top-3.5 text-slate-400" />
                 <input
                   type="text"
                   required
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  placeholder="e.g. admin, analyst, viewer"
-                  className="w-full bg-[#0b0e14] border border-[#232a3b] rounded-lg pl-9 pr-3 py-2.5 text-slate-100 placeholder-slate-600 focus:border-emerald-500 focus:outline-none transition-colors"
+                  className="w-full bg-[#0b0e14] border border-[#242e40] rounded-xl pl-11 pr-4 py-3 text-base text-slate-100 placeholder-slate-500 font-mono focus:border-emerald-500 focus:outline-none transition-colors"
+                  placeholder="Enter operator username..."
                 />
               </div>
             </div>
 
-            {/* Password */}
+            {/* Password Input */}
             <div>
-              <label className="block text-slate-300 font-semibold mb-1.5 uppercase tracking-wider text-[11px]">
+              <label className="block text-sm font-bold text-slate-200 uppercase tracking-wider mb-2">
                 Password
               </label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-500">
-                  <Lock className="w-4 h-4" />
-                </div>
+                <Lock className="w-5 h-5 absolute left-3.5 top-3.5 text-slate-400" />
                 <input
                   type="password"
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Enter local access password"
-                  className="w-full bg-[#0b0e14] border border-[#232a3b] rounded-lg pl-9 pr-3 py-2.5 text-slate-100 placeholder-slate-600 focus:border-emerald-500 focus:outline-none transition-colors"
+                  className="w-full bg-[#0b0e14] border border-[#242e40] rounded-xl pl-11 pr-4 py-3 text-base text-slate-100 placeholder-slate-500 font-mono focus:border-emerald-500 focus:outline-none transition-colors"
+                  placeholder="••••••••••••"
                 />
               </div>
             </div>
 
-            {/* Role Radio Selection */}
+            {/* Role Radio Pill Selection */}
             <div>
-              <label className="block text-slate-300 font-semibold mb-2 uppercase tracking-wider text-[11px]">
-                Role Authorization
+              <label className="block text-sm font-bold text-slate-200 uppercase tracking-wider mb-2.5">
+                Designated Access Role (RBAC)
               </label>
-              <div className="space-y-2">
-                {[
-                  { id: 'Administrator', label: 'Administrator', desc: 'Full platform administration, model registry & system settings' },
-                  { id: 'Fraud Analyst', label: 'Fraud Analyst', desc: 'Operational investigation queue, ML predictions & reports' },
-                  { id: 'Management / Viewer', label: 'Management / Viewer', desc: 'Executive loss prevention KPIs & read-only analytics' },
-                ].map((r) => {
-                  const isChecked = selectedRole === r.id;
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-center">
+                {(['Administrator', 'Fraud Analyst', 'Management / Viewer'] as UserRole[]).map((r) => {
+                  const isSelected = selectedRole === r;
                   return (
-                    <label
-                      key={r.id}
-                      className={`flex items-start space-x-3 p-2.5 rounded-lg border cursor-pointer transition-all ${
-                        isChecked
-                          ? 'bg-emerald-950/30 border-emerald-500/50 shadow-sm'
-                          : 'bg-[#0b0e14] border-[#1e2432] hover:border-slate-700'
+                    <button
+                      key={r}
+                      type="button"
+                      onClick={() => setSelectedRole(r)}
+                      className={`p-3 rounded-xl border text-sm font-bold transition-all ${
+                        isSelected
+                          ? 'bg-emerald-950/80 border-emerald-500 text-emerald-300 ring-2 ring-emerald-500/30 shadow-md'
+                          : 'bg-[#0d1017] border-[#222b3b] text-slate-400 hover:text-slate-200 hover:bg-[#141924]'
                       }`}
                     >
-                      <input
-                        type="radio"
-                        name="user-role"
-                        value={r.id}
-                        checked={isChecked}
-                        onChange={() => setSelectedRole(r.id as UserRole)}
-                        className="mt-0.5 accent-emerald-500 cursor-pointer"
-                      />
-                      <div className="flex-1 min-w-0">
-                        <span className={`block font-bold text-xs ${isChecked ? 'text-emerald-400' : 'text-slate-200'}`}>
-                          {r.label}
-                        </span>
-                        <span className="block text-[11px] text-slate-500 leading-snug">
-                          {r.desc}
-                        </span>
-                      </div>
-                    </label>
+                      {r}
+                    </button>
                   );
                 })}
               </div>
@@ -149,49 +130,57 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onComplete }) => {
 
             {/* Submit Button */}
             <div className="pt-2">
-              <Button type="submit" variant="primary" className="w-full py-3" icon={ArrowRight} isLoading={isLoading}>
-                LOGIN TO PLATFORM
+              <Button
+                type="submit"
+                variant="primary"
+                className="w-full py-3.5 text-base font-bold shadow-lg"
+                icon={ArrowRight}
+                isLoading={isLoading}
+              >
+                Authenticate &amp; Enter Platform
               </Button>
             </div>
           </form>
 
-          {/* Quick Demo Credentials Strip */}
-          <div className="pt-4 border-t border-[#1e2432] space-y-2">
-            <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block text-center">
-              Quick Test Demo Credentials (Click to Autofill):
+          {/* Quick Demo Credentials Autofill Ribbon */}
+          <div className="pt-4 border-t border-[#1e2533] space-y-3">
+            <span className="text-xs font-bold text-slate-400 uppercase tracking-wider block text-center">
+              1-Click Demo Accounts (Safe Local Credentials)
             </span>
-            <div className="grid grid-cols-3 gap-1.5 text-[10px] font-mono">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
               <button
                 type="button"
                 onClick={() => handleSelectDemo('admin', 'Admin@2026', 'Administrator')}
-                className="p-1.5 rounded bg-[#141822] hover:bg-emerald-950/60 border border-[#232a3b] hover:border-emerald-500/40 text-slate-300 text-center transition-colors"
+                className="p-2.5 rounded-lg bg-[#0e121a] hover:bg-emerald-950/40 border border-[#202838] hover:border-emerald-700/50 text-left transition-all"
               >
-                <span className="font-bold text-emerald-400 block font-sans">Admin</span>
-                admin / Admin@2026
+                <span className="font-bold text-slate-200 block text-xs">Administrator</span>
+                <span className="text-[11px] text-emerald-400 font-mono">admin / Admin@2026</span>
               </button>
+
               <button
                 type="button"
                 onClick={() => handleSelectDemo('analyst', 'Analyst@2026', 'Fraud Analyst')}
-                className="p-1.5 rounded bg-[#141822] hover:bg-amber-950/60 border border-[#232a3b] hover:border-amber-500/40 text-slate-300 text-center transition-colors"
+                className="p-2.5 rounded-lg bg-[#0e121a] hover:bg-amber-950/40 border border-[#202838] hover:border-amber-700/50 text-left transition-all"
               >
-                <span className="font-bold text-amber-400 block font-sans">Analyst</span>
-                analyst / Analyst@2026
+                <span className="font-bold text-slate-200 block text-xs">Fraud Analyst</span>
+                <span className="text-[11px] text-amber-400 font-mono">analyst / Analyst@2026</span>
               </button>
+
               <button
                 type="button"
                 onClick={() => handleSelectDemo('viewer', 'Viewer@2026', 'Management / Viewer')}
-                className="p-1.5 rounded bg-[#141822] hover:bg-slate-800 border border-[#232a3b] hover:border-slate-600 text-slate-300 text-center transition-colors"
+                className="p-2.5 rounded-lg bg-[#0e121a] hover:bg-slate-800/40 border border-[#202838] hover:border-slate-600 text-left transition-all"
               >
-                <span className="font-bold text-slate-300 block font-sans">Viewer</span>
-                viewer / Viewer@2026
+                <span className="font-bold text-slate-200 block text-xs">Viewer (Executive)</span>
+                <span className="text-[11px] text-slate-300 font-mono">viewer / Viewer@2026</span>
               </button>
             </div>
           </div>
         </div>
 
-        {/* Security / Privacy Footer */}
-        <p className="text-center text-[11px] text-slate-500">
-          Local File Storage &bull; Zero External Database &bull; Zero Cloud AI Keys
+        {/* Local-First Architecture Badge */}
+        <p className="text-xs text-slate-400 text-center font-medium">
+          Zero external database &bull; Zero third-party cloud keys &bull; 100% local persistence
         </p>
       </div>
     </div>
