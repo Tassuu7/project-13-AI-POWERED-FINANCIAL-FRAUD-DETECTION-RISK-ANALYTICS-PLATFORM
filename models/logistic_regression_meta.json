@@ -1,0 +1,41 @@
+{
+  "model_name": "Logistic Regression",
+  "dataset_name": "in_memory_test.csv",
+  "trained_at": "2026-09-03 14:01:37",
+  "features": [
+    "amount",
+    "account_age_days",
+    "transaction_frequency",
+    "distance_from_usual_location",
+    "amount_to_prev_ratio",
+    "amount_deviation",
+    "is_night_transaction",
+    "is_high_value",
+    "high_velocity_flag",
+    "distance_anomaly",
+    "suspicious_device_flag",
+    "account_youth_risk",
+    "compound_risk_index"
+  ],
+  "metrics": {
+    "model_name": "Logistic Regression",
+    "accuracy": 1.0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1_score": 1.0,
+    "roc_auc": 1.0,
+    "training_time_seconds": 0.011,
+    "confusion_matrix": [
+      [
+        27,
+        0
+      ],
+      [
+        0,
+        3
+      ]
+    ],
+    "is_best": false,
+    "notes": "Linear baseline with balanced class weights. High interpretability."
+  }
+}
