@@ -1,0 +1,29 @@
+{
+  "risk_score_bands": {
+    "low": {
+      "min": 0,
+      "max": 30,
+      "label": "Low Risk",
+      "action": "Approve / Standard Processing"
+    },
+    "medium": {
+      "min": 31,
+      "max": 70,
+      "label": "Medium Risk",
+      "action": "Secondary Verification / Step-up Auth"
+    },
+    "high": {
+      "min": 71,
+      "max": 100,
+      "label": "High Risk",
+      "action": "Hold & Route to Fraud Analyst Review"
+    }
+  },
+  "anomaly_factors": {
+    "high_amount_ratio": 2.5,
+    "unusual_hour_start": 1,
+    "unusual_hour_end": 5,
+    "high_velocity_count": 4,
+    "extreme_distance_km": 150
+  }
+}
