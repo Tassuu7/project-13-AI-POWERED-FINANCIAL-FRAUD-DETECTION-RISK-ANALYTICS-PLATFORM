@@ -1,5 +1,31 @@
 [
   {
+    "id": "LOG-527D1720",
+    "timestamp": "2026-09-03 14:39:28",
+    "action": "Validated dataset 'sample_synthetic_transactions.csv'",
+    "category": "DATASET",
+    "user": "Analyst",
+    "details": {
+      "valid": true,
+      "passed_checks": 8,
+      "failed_checks": 0
+    },
+    "status": "SUCCESS"
+  },
+  {
+    "id": "LOG-EA4A7AB1",
+    "timestamp": "2026-09-03 14:31:29",
+    "action": "Validated dataset 'sample_synthetic_transactions.csv'",
+    "category": "DATASET",
+    "user": "Analyst",
+    "details": {
+      "valid": true,
+      "passed_checks": 8,
+      "failed_checks": 0
+    },
+    "status": "SUCCESS"
+  },
+  {
     "id": "LOG-4526330E",
     "timestamp": "2026-09-03 14:01:36",
     "action": "Validated dataset 'sample_synthetic_transactions.csv'",

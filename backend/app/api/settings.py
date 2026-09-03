@@ -2,16 +2,17 @@
 
 import json
 from typing import Dict, Any
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 from config.settings import settings
 from backend.app.services.ml_service import ml_service
 from backend.app.services.history_service import history_service
+from backend.app.core.auth import require_role, RoleEnum
 
 router = APIRouter(prefix="/settings", tags=["Settings"])
 
 
 @router.get("")
-def get_settings():
+def get_settings(current_user = Depends(require_role([RoleEnum.ADMIN]))):
     """Retrieve platform configuration, risk thresholds, and active model status."""
     return {
         "project_name": settings.PROJECT_NAME,
@@ -39,17 +40,29 @@ def get_settings():
 
 
 @router.post("/thresholds")
-def update_thresholds(payload: Dict[str, int]):
+def update_thresholds(
+    payload: Dict[str, int],
+    current_user = Depends(require_role([RoleEnum.ADMIN]))
+):
     """Update risk scoring threshold boundaries."""
     if "low_max" in payload:
         settings.RISK_LOW_MAX = payload["low_max"]
     if "medium_max" in payload:
         settings.RISK_MEDIUM_MAX = payload["medium_max"]
 
+    config_path = settings.BASE_DIR / "config" / "risk_thresholds.json"
+    with open(config_path, "w") as f:
+        json.dump({
+            "low_max": settings.RISK_LOW_MAX,
+            "medium_max": settings.RISK_MEDIUM_MAX,
+            "high_min": settings.RISK_MEDIUM_MAX + 1
+        }, f, indent=2)
+
     history_service.record_action(
-        action="Updated risk threshold boundaries",
+        action=f"Updated risk thresholds: Low Max={settings.RISK_LOW_MAX}, Medium Max={settings.RISK_MEDIUM_MAX}",
         category="SETTINGS",
-        details={"low_max": settings.RISK_LOW_MAX, "medium_max": settings.RISK_MEDIUM_MAX}
+        user=current_user.username,
+        details=payload
     )
 
     return {

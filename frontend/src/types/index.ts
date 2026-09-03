@@ -1,4 +1,4 @@
-export type UserRole = 'Analyst' | 'Reviewer' | 'Administrator';
+export type UserRole = 'Administrator' | 'Fraud Analyst' | 'Management / Viewer';
 
 export type ModelType =
   | 'Logistic Regression'
@@ -9,9 +9,10 @@ export type ModelType =
 
 export interface UserSession {
   username: string;
+  display_name?: string;
   role: UserRole;
-  authenticated: boolean;
   permissions: string[];
+  token: string;
 }
 
 export interface DatasetInfo {
@@ -43,99 +44,84 @@ export interface ValidationCheck {
 }
 
 export interface ValidationReport {
+  dataset_name: string;
   valid: boolean;
   total_records: number;
-  total_checks: number;
-  passed_checks: number;
-  failed_checks: number;
+  total_columns: number;
   checks: ValidationCheck[];
+  missing_values: Record<string, number>;
+  duplicate_records: number;
+  negative_amount_count: number;
+  date_parse_errors: number;
   recommended_actions: string[];
 }
 
 export interface PreprocessingResult {
-  original_shape: number[];
-  processed_shape: number[];
-  train_shape: number[];
-  test_shape: number[];
-  missing_values_handled: number;
-  duplicates_removed: number;
+  dataset_name: string;
+  original_rows: number;
+  processed_rows: number;
+  original_columns: number;
+  processed_columns: number;
+  imputed_nulls: number;
+  removed_duplicates: number;
   encoded_columns: string[];
-  scaled_columns: string[];
-  summary_notes: string[];
-}
-
-export interface FeatureSummary {
-  feature_name: string;
-  feature_type: string;
-  description: string;
-  importance_rank: number;
+  scaler_used: string;
+  train_samples: number;
+  test_samples: number;
 }
 
 export interface FeatureResponse {
-  original_feature_count: number;
-  new_feature_count: number;
-  created_features: FeatureSummary[];
-  sample_preview: Record<string, any>[];
+  dataset_name: string;
+  total_features: number;
+  engineered_features: {
+    name: string;
+    description: string;
+    calculation: string;
+    data_type: string;
+  }[];
 }
 
 export interface ModelMetrics {
-  model_name: string;
   accuracy: number;
   precision: number;
   recall: number;
   f1_score: number;
-  roc_auc: number | null;
-  training_time_seconds: number;
-  confusion_matrix: number[][];
-  is_best: boolean;
-  notes: string;
+  roc_auc: number;
+  latency_ms: number;
+  confusion_matrix: {
+    true_negatives: number;
+    false_positives: number;
+    false_negatives: number;
+    true_positives: number;
+  };
 }
 
 export interface ModelComparisonResponse {
-  trained_timestamp: string;
   dataset_name: string;
+  trained_models: Record<string, ModelMetrics>;
+  best_model_name: string;
+  comparison_metric: string;
   total_train_samples: number;
   total_test_samples: number;
-  best_model_name: string;
-  models: ModelMetrics[];
-}
-
-export interface RiskFactor {
-  factor: string;
-  impact: 'HIGH' | 'MEDIUM' | 'LOW';
-  description: string;
 }
 
 export interface PredictionResult {
   transaction_id: string;
-  customer_id: string;
-  amount: number;
-  prediction_label: string;
-  is_suspicious: boolean;
+  is_fraud: boolean;
+  fraud_probability: number;
   risk_score: number;
   risk_level: 'LOW' | 'MEDIUM' | 'HIGH';
-  confidence_probability: number;
-  contributing_factors: RiskFactor[];
-  recommended_action: string;
-  model_used: string;
+  prediction_label: string;
+  contributing_factors: string[];
+  policy_recommendation: string;
 }
 
-export interface TransactionRecord {
-  transaction_id: string;
-  customer_id: string;
-  amount: number;
-  timestamp: string;
-  transaction_type: string;
-  merchant_category: string;
-  location: string;
-  device_type: string;
-  risk_score?: number;
-  risk_level?: string;
-  is_fraud?: number;
-  [key: string]: any;
-}
-
-export type ReviewStatus = 'New' | 'Under Review' | 'Investigating' | 'Cleared' | 'Confirmed Suspicious';
+export type ReviewStatus =
+  | 'New'
+  | 'Under Review'
+  | 'Investigating'
+  | 'Cleared'
+  | 'Confirmed Suspicious';
 
 export interface SuspiciousItem {
   transaction_id: string;
@@ -145,12 +131,11 @@ export interface SuspiciousItem {
   location: string;
   device_type: string;
   risk_score: number;
-  risk_level: string;
+  risk_level: 'LOW' | 'MEDIUM' | 'HIGH';
   review_status: ReviewStatus;
   review_notes?: string;
   assigned_analyst?: string;
   last_updated?: string;
-  flags: string[];
 }
 
 export interface AuditLogItem {
@@ -159,8 +144,8 @@ export interface AuditLogItem {
   action: string;
   category: string;
   user: string;
-  details: Record<string, any>;
   status: string;
+  details?: Record<string, any>;
 }
 
 export interface PlatformSettings {
@@ -172,17 +157,6 @@ export interface PlatformSettings {
     medium_max: number;
     high_min: number;
   };
-  storage: {
-    data_dir: string;
-    models_dir: string;
-    reports_dir: string;
-    exports_dir: string;
-    database_connected: boolean;
-    persistence_mode: string;
-  };
-  theme: {
-    palette: string;
-    accent: string;
-    avoid_blue: boolean;
-  };
+  storage: Record<string, any>;
+  theme: Record<string, any>;
 }

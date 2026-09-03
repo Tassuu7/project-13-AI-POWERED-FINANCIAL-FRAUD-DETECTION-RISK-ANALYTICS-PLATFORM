@@ -1,17 +1,21 @@
 """Machine learning model training, evaluation, and registry endpoints."""
 
 from typing import List, Dict, Any
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
 from backend.app.models.schemas import ModelTrainRequest, ModelComparisonResponse
 from backend.app.services.ml_service import ml_service
 from backend.app.services.storage_service import storage_service
 from backend.app.services.history_service import history_service
+from backend.app.core.auth import require_role, RoleEnum
 
 router = APIRouter(prefix="/models", tags=["Models"])
 
 
 @router.post("/train", response_model=ModelComparisonResponse)
-def train_models(req: ModelTrainRequest):
+def train_models(
+    req: ModelTrainRequest,
+    current_user = Depends(require_role([RoleEnum.ADMIN]))
+):
     """Train multiple ML algorithms on dataset, evaluate metrics, and select best model."""
     try:
         df = storage_service.load_dataset(req.dataset_name)
@@ -26,6 +30,7 @@ def train_models(req: ModelTrainRequest):
     history_service.record_action(
         action=f"Trained {len(req.models_to_train)} models on '{req.dataset_name}'",
         category="MODEL",
+        user=current_user.username,
         details={
             "models": [m.value for m in req.models_to_train],
             "best_model": comparison.best_model_name,
@@ -44,7 +49,15 @@ def list_trained_models():
 
 
 @router.post("/{model_name}/select")
-def select_active_model(model_name: str):
-    """Set the platform's default inference model."""
-    ml_service.active_model_name = model_name
-    return {"message": f"Active model successfully updated to '{model_name}'"}
+def select_active_model(
+    model_name: str,
+    current_user = Depends(require_role([RoleEnum.ADMIN]))
+):
+    """Set model as active production scoring engine."""
+    res = ml_service.set_active_model(model_name)
+    history_service.record_action(
+        action=f"Changed active scoring model to '{model_name}'",
+        category="MODEL",
+        user=current_user.username
+    )
+    return res

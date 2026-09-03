@@ -2,7 +2,7 @@
 
 from typing import List, Dict, Any
 from pathlib import Path
-from fastapi import APIRouter, UploadFile, File, HTTPException
+from fastapi import APIRouter, UploadFile, File, HTTPException, Depends
 from fastapi.responses import FileResponse
 import pandas as pd
 
@@ -10,6 +10,7 @@ from backend.app.models.schemas import SyntheticGenerateRequest, DatasetInfo
 from backend.app.services.synthetic_generator import synthetic_generator
 from backend.app.services.storage_service import storage_service
 from backend.app.services.history_service import history_service
+from backend.app.core.auth import require_role, RoleEnum
 from config.settings import settings
 from config.logging_config import logger
 
@@ -17,7 +18,10 @@ router = APIRouter(prefix="/datasets", tags=["Datasets"])
 
 
 @router.post("/upload")
-async def upload_dataset(file: UploadFile = File(...)):
+async def upload_dataset(
+    file: UploadFile = File(...),
+    current_user = Depends(require_role([RoleEnum.ADMIN, RoleEnum.ANALYST]))
+):
     """Upload CSV dataset locally."""
     if not file.filename.endswith(".csv"):
         raise HTTPException(status_code=400, detail="Only CSV format datasets are permitted.")
@@ -52,7 +56,10 @@ async def upload_dataset(file: UploadFile = File(...)):
 
 
 @router.post("/generate")
-def generate_dataset(req: SyntheticGenerateRequest):
+def generate_dataset(
+    req: SyntheticGenerateRequest,
+    current_user = Depends(require_role([RoleEnum.ADMIN, RoleEnum.ANALYST]))
+):
     """Generate reproducible synthetic financial transaction dataset."""
     df = synthetic_generator.generate(req)
     filename = f"synthetic_transactions_{len(df)}_seed{req.random_seed}.csv"
