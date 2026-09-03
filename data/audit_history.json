@@ -1,5 +1,71 @@
 [
   {
+    "id": "LOG-46DCC378",
+    "timestamp": "2026-09-03 22:39:31",
+    "action": "Generated report 'Executive Summary'",
+    "category": "EXPORT",
+    "user": "Analyst",
+    "details": {
+      "format": "html",
+      "file": "executive_summary_20260903_223930.html"
+    },
+    "status": "SUCCESS"
+  },
+  {
+    "id": "LOG-16654D17",
+    "timestamp": "2026-09-03 22:17:45",
+    "action": "Generated report 'Executive Summary'",
+    "category": "EXPORT",
+    "user": "Analyst",
+    "details": {
+      "format": "html",
+      "file": "executive_summary_20260903_221745.html"
+    },
+    "status": "SUCCESS"
+  },
+  {
+    "id": "LOG-CFF7C29F",
+    "timestamp": "2026-09-03 22:17:36",
+    "action": "Scored transaction TXN-126",
+    "category": "PREDICTION",
+    "user": "Analyst",
+    "details": {
+      "amount": 18.0,
+      "risk_score": 69,
+      "level": "MEDIUM",
+      "model": "Random Forest"
+    },
+    "status": "SUCCESS"
+  },
+  {
+    "id": "LOG-F0CFC99A",
+    "timestamp": "2026-09-03 22:17:17",
+    "action": "Scored transaction TXN-126",
+    "category": "PREDICTION",
+    "user": "Analyst",
+    "details": {
+      "amount": 18.0,
+      "risk_score": 75,
+      "level": "HIGH",
+      "model": "Random Forest"
+    },
+    "status": "SUCCESS"
+  },
+  {
+    "id": "LOG-C5DC94DA",
+    "timestamp": "2026-09-03 22:17:05",
+    "action": "Scored transaction TXN-295001",
+    "category": "PREDICTION",
+    "user": "Analyst",
+    "details": {
+      "amount": 185000.0,
+      "risk_score": 99,
+      "level": "HIGH",
+      "model": "Random Forest"
+    },
+    "status": "SUCCESS"
+  },
+  {
     "id": "LOG-FE78992D",
     "timestamp": "2026-09-03 22:06:34",
     "action": "Validated dataset 'sample_synthetic_transactions.csv'",

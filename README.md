@@ -64,9 +64,9 @@ cd project-13
 pip install -r backend/requirements.txt
 
 # Start the FastAPI backend server
-uvicorn backend.app.main:app --host 127.0.0.1 --port 8000 --reload
+uvicorn backend.app.main:app --host 0.0.0.0 --port 8013 --reload
 ```
-API Documentation will be available at `http://127.0.0.1:8000/docs`.
+API Documentation will be available at `http://127.0.0.1:8013/docs`.
 
 ### 3. Frontend Setup
 ```bash
@@ -79,7 +79,7 @@ npm install
 # Start the Vite development server
 npm run dev
 ```
-Open your browser at `http://localhost:5173`.
+Open your browser at `http://localhost:5193`.
 
 ---
 

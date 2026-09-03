@@ -44,12 +44,14 @@ def list_reports() -> List[Dict[str, Any]]:
     return reports
 
 
+@router.get("/download/{filename}")
 @router.get("/{filename}/download")
+@router.get("/{filename}")
 def download_report(filename: str):
     """Download generated report document."""
     target_path = settings.REPORTS_DIR / filename
     if not target_path.exists():
-        raise HTTPException(status_code=404, detail="Report file not found.")
+        raise HTTPException(status_code=404, detail=f"Report file '{filename}' not found.")
 
     media = "application/pdf" if filename.endswith(".pdf") else "text/html"
     return FileResponse(path=target_path, media_type=media, filename=filename)

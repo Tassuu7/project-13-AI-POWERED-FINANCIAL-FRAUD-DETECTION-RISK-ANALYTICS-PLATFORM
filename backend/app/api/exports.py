@@ -55,6 +55,7 @@ def list_export_files() -> List[Dict[str, Any]]:
 
 
 @router.get("/download/{filename}")
+@router.get("/{filename}")
 def download_export_file(filename: str):
     """Download export file."""
     path = settings.EXPORTS_DIR / filename

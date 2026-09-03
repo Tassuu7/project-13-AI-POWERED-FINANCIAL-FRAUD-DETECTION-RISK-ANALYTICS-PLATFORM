@@ -7,7 +7,8 @@ import {
   CheckCircle2,
   FileSpreadsheet,
   FileCode,
-  RefreshCw
+  RefreshCw,
+  ExternalLink
 } from 'lucide-react';
 import { useAppState } from '../context/AppStateContext';
 import { useAuth } from '../context/AuthContext';
@@ -30,6 +31,7 @@ export const ReportsPage: React.FC = () => {
   const [isGenerating, setIsGenerating] = useState(false);
   const [activeReport, setActiveReport] = useState<any>(null);
   const [reportList, setReportList] = useState<any[]>([]);
+  const [htmlContent, setHtmlContent] = useState<string | null>(null);
 
   const loadReports = async () => {
     try {
@@ -47,11 +49,25 @@ export const ReportsPage: React.FC = () => {
   const handleGenerate = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsGenerating(true);
+    setHtmlContent(null);
     try {
       const res = await api.generateReport(selectedType, format);
       setActiveReport(res);
       showToast(`Generated: ${res.report_id} (${res.format.toUpperCase()})`, 'success');
       loadReports();
+
+      // If HTML format, fetch content for direct inline preview
+      if (res.format?.toLowerCase() === 'html' || res.filename?.endsWith('.html')) {
+        try {
+          const resp = await fetch(`/api/reports/download/${res.filename}`);
+          if (resp.ok) {
+            const txt = await resp.text();
+            setHtmlContent(txt);
+          }
+        } catch (fetchErr) {
+          console.warn('Inline preview fetch warning:', fetchErr);
+        }
+      }
     } catch (err: any) {
       showToast(err.message || 'Report generation failed', 'error');
     } finally {
@@ -59,11 +75,27 @@ export const ReportsPage: React.FC = () => {
     }
   };
 
+  const handleSelectHistoryReport = async (report: any) => {
+    setActiveReport(report);
+    setHtmlContent(null);
+    if (report.filename.endsWith('.html')) {
+      try {
+        const resp = await fetch(`/api/reports/download/${report.filename}`);
+        if (resp.ok) {
+          const txt = await resp.text();
+          setHtmlContent(txt);
+        }
+      } catch (e) {
+        console.warn('Error fetching report text:', e);
+      }
+    }
+  };
+
   const handleExportCSV = async () => {
     try {
       const res = await api.exportSuspicious();
       showToast(`Exported: ${res.filename}`, 'success');
-      window.open(`http://localhost:8000/api/exports/download/${res.filename}`, '_blank');
+      window.open(`/api/exports/download/${res.filename}`, '_blank');
     } catch (err: any) {
       showToast(err.message || 'CSV export failed', 'error');
     }
@@ -163,35 +195,54 @@ export const ReportsPage: React.FC = () => {
       {/* Live Generated Report Viewer */}
       {activeReport && (
         <div className="bg-[#111622] border border-[#1e2533] rounded-2xl overflow-hidden shadow-lg w-full">
-          <div className="p-5 bg-[#141a26] border-b border-[#1e2533] flex items-center justify-between">
+          <div className="p-5 bg-[#141a26] border-b border-[#1e2533] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div className="flex items-center space-x-3">
               <CheckCircle2 className="w-6 h-6 text-emerald-400" />
               <div>
                 <h4 className="text-base font-bold text-slate-100 font-mono">
-                  {activeReport.report_id}
+                  {activeReport.report_id || activeReport.filename}
                 </h4>
                 <span className="text-xs text-slate-400 font-sans">
-                  Compiled at {activeReport.generated_at} &bull; Type: {activeReport.report_type}
+                  {activeReport.generated_at ? `Compiled at ${activeReport.generated_at}` : 'Generated Document'} &bull; Format: {String(activeReport.format).toUpperCase()}
                 </span>
               </div>
             </div>
 
-            <Button
-              variant="primary"
-              size="sm"
-              icon={Download}
-              onClick={() => window.open(`http://localhost:8000/api/reports/download/${activeReport.filename}`, '_blank')}
-            >
-              Download {activeReport.format.toUpperCase()}
-            </Button>
+            <div className="flex items-center space-x-3">
+              <a
+                href={`/api/reports/download/${activeReport.filename}`}
+                target="_blank"
+                rel="noreferrer"
+                className="px-4 py-2 rounded-xl bg-[#1c2433] hover:bg-[#253045] text-slate-200 text-xs font-bold inline-flex items-center space-x-1.5 transition-all"
+              >
+                <ExternalLink className="w-4 h-4 text-slate-400" />
+                <span>Open in New Tab</span>
+              </a>
+
+              <a
+                href={`/api/reports/download/${activeReport.filename}`}
+                download={activeReport.filename}
+                className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold inline-flex items-center space-x-1.5 transition-all shadow-md"
+              >
+                <Download className="w-4 h-4" />
+                <span>Download File</span>
+              </a>
+            </div>
           </div>
 
           <div className="p-4 bg-[#090c12]">
-            <iframe
-              src={`http://localhost:8000/api/reports/download/${activeReport.filename}`}
-              title="Report Preview"
-              className="w-full h-[550px] rounded-xl border border-[#202838] bg-white"
-            />
+            {htmlContent ? (
+              <div
+                dangerouslySetInnerHTML={{ __html: htmlContent }}
+                className="w-full max-h-[650px] overflow-y-auto rounded-xl border border-[#202838] bg-[#0d0f12] text-slate-100 p-6 shadow-inner"
+              />
+            ) : (
+              <iframe
+                src={`/api/reports/download/${activeReport.filename}`}
+                title="Report Preview"
+                className="w-full h-[600px] rounded-xl border border-[#202838] bg-white"
+              />
+            )}
           </div>
         </div>
       )}
@@ -199,11 +250,14 @@ export const ReportsPage: React.FC = () => {
       {/* Historical Generated Reports Table */}
       <div className="bg-[#111622] border border-[#1e2533] rounded-2xl overflow-hidden shadow-md w-full">
         <div className="p-5 bg-[#141a26] border-b border-[#1e2533] flex items-center justify-between">
-          <h4 className="text-base font-bold text-slate-100">
-            Historical Compliance Archives
-          </h4>
+          <div>
+            <h4 className="text-base font-bold text-slate-100">
+              Historical Compliance Archives
+            </h4>
+            <span className="text-xs text-slate-400">Click any report to preview or download</span>
+          </div>
           <Button variant="ghost" size="sm" icon={RefreshCw} onClick={loadReports}>
-            Refresh
+            Refresh Archives
           </Button>
         </div>
 
@@ -214,26 +268,43 @@ export const ReportsPage: React.FC = () => {
                 <th className="px-5 py-3.5">Filename</th>
                 <th className="px-5 py-3.5">Report Type</th>
                 <th className="px-5 py-3.5">Format</th>
-                <th className="px-5 py-3.5">Generated Timestamp</th>
-                <th className="px-5 py-3.5 text-right">Action</th>
+                <th className="px-5 py-3.5">File Size</th>
+                <th className="px-5 py-3.5 text-right">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-[#181f2e] font-mono text-slate-200">
               {reportList.map((r) => (
-                <tr key={r.filename} className="hover:bg-[#141c29] transition-colors">
-                  <td className="px-5 py-3.5 text-slate-100 font-bold">{r.filename}</td>
+                <tr
+                  key={r.filename}
+                  className="hover:bg-[#141c29] transition-colors cursor-pointer"
+                  onClick={() => handleSelectHistoryReport(r)}
+                >
+                  <td className="px-5 py-3.5 text-emerald-400 font-bold">{r.filename}</td>
                   <td className="px-5 py-3.5 text-slate-300 font-sans">{r.report_type || 'Executive Summary'}</td>
                   <td className="px-5 py-3.5">
                     <span className="px-2.5 py-0.5 rounded-lg text-xs font-black bg-emerald-950 text-emerald-300 border border-emerald-700/60 uppercase">
                       {r.format}
                     </span>
                   </td>
-                  <td className="px-5 py-3.5 text-xs text-slate-400">{r.created_at}</td>
-                  <td className="px-5 py-3.5 text-right font-sans">
+                  <td className="px-5 py-3.5 text-xs text-slate-400 font-sans">
+                    {r.size_bytes ? `${(r.size_bytes / 1024).toFixed(1)} KB` : 'N/A'}
+                  </td>
+                  <td className="px-5 py-3.5 text-right font-sans space-x-3">
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleSelectHistoryReport(r);
+                      }}
+                      className="text-xs text-slate-300 hover:text-emerald-400 font-bold inline-flex items-center space-x-1"
+                    >
+                      <Eye className="w-4 h-4 mr-1 text-slate-400" />
+                      <span>Preview</span>
+                    </button>
                     <a
-                      href={`http://localhost:8000/api/reports/download/${r.filename}`}
-                      target="_blank"
-                      rel="noreferrer"
+                      href={`/api/reports/download/${r.filename}`}
+                      download={r.filename}
+                      onClick={(e) => e.stopPropagation()}
                       className="text-xs text-emerald-400 hover:text-emerald-300 font-bold inline-flex items-center space-x-1"
                     >
                       <Download className="w-4 h-4 mr-1" />
@@ -242,6 +313,13 @@ export const ReportsPage: React.FC = () => {
                   </td>
                 </tr>
               ))}
+              {reportList.length === 0 && (
+                <tr>
+                  <td colSpan={5} className="p-10 text-center text-slate-400 text-sm font-sans">
+                    No reports generated yet. Click "Compile & Generate Report" above.
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>

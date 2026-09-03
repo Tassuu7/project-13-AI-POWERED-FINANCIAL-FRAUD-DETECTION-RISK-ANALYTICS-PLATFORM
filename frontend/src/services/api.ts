@@ -14,7 +14,7 @@ import {
   ReviewStatus
 } from '../types';
 
-const API_BASE = (typeof window !== 'undefined' && window.location.port === '5173') ? '/api' : 'http://localhost:8000/api';
+const API_BASE = typeof window !== 'undefined' ? '/api' : 'http://127.0.0.1:8013/api';
 
 function getAuthHeaders(): Record<string, string> {
   const headers: Record<string, string> = {};
