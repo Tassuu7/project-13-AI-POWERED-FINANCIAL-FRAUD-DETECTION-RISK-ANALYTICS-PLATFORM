@@ -1,5 +1,18 @@
 [
   {
+    "id": "LOG-C53BCE14",
+    "timestamp": "2026-09-03 21:22:24",
+    "action": "Validated dataset 'sample_synthetic_transactions.csv'",
+    "category": "DATASET",
+    "user": "Analyst",
+    "details": {
+      "valid": true,
+      "passed_checks": 8,
+      "failed_checks": 0
+    },
+    "status": "SUCCESS"
+  },
+  {
     "id": "LOG-8A704B09",
     "timestamp": "2026-09-03 18:07:35",
     "action": "Generated report 'Executive Summary'",
