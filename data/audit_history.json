@@ -1,5 +1,32 @@
 [
   {
+    "id": "LOG-974DA1CE",
+    "timestamp": "2026-09-03 23:20:17",
+    "action": "Scored transaction TXN-295001",
+    "category": "PREDICTION",
+    "user": "Analyst",
+    "details": {
+      "amount": 185000.0,
+      "risk_score": 98,
+      "level": "HIGH",
+      "model": "Random Forest"
+    },
+    "status": "SUCCESS"
+  },
+  {
+    "id": "LOG-BB4FC7D8",
+    "timestamp": "2026-09-03 23:20:16",
+    "action": "Validated dataset 'sample_synthetic_transactions.csv'",
+    "category": "DATASET",
+    "user": "Analyst",
+    "details": {
+      "valid": true,
+      "passed_checks": 8,
+      "failed_checks": 0
+    },
+    "status": "SUCCESS"
+  },
+  {
     "id": "LOG-46DCC378",
     "timestamp": "2026-09-03 22:39:31",
     "action": "Generated report 'Executive Summary'",
