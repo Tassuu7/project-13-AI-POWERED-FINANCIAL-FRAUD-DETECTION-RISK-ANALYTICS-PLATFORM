@@ -12,8 +12,7 @@ import {
   PlatformSettings,
   ReviewStatus
 } from '../types';
-
-const API_BASE = 'http://localhost:8000/api';
+const API_BASE = (typeof window !== 'undefined' && window.location.port === '5173') ? '/api' : 'http://localhost:8000/api';
 
 async function handleResponse<T>(res: Response): Promise<T> {
   if (!res.ok) {
