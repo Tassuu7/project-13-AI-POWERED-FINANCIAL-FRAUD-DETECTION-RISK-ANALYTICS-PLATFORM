@@ -1,5 +1,167 @@
 [
   {
+    "id": "LOG-6F970163",
+    "timestamp": "2026-09-04 07:07:20",
+    "action": "Validated dataset 'sample_synthetic_transactions.csv'",
+    "category": "DATASET",
+    "user": "Analyst",
+    "details": {
+      "valid": true,
+      "passed_checks": 8,
+      "failed_checks": 0
+    },
+    "status": "SUCCESS"
+  },
+  {
+    "id": "LOG-1CA7EB34",
+    "timestamp": "2026-09-04 07:07:00",
+    "action": "Generated synthetic dataset 'synthetic_transactions_500_seed99.csv'",
+    "category": "DATASET",
+    "user": "Analyst",
+    "details": {
+      "records": 500,
+      "fraud_pct": 6.0,
+      "seed": 99
+    },
+    "status": "SUCCESS"
+  },
+  {
+    "id": "LOG-9BC83DD8",
+    "timestamp": "2026-09-04 07:02:18",
+    "action": "Trained 2 models on 'sample_synthetic_transactions.csv'",
+    "category": "MODEL",
+    "user": "admin",
+    "details": {
+      "models": [
+        "Logistic Regression",
+        "Random Forest"
+      ],
+      "best_model": "Logistic Regression",
+      "train_samples": 960,
+      "test_samples": 240
+    },
+    "status": "SUCCESS"
+  },
+  {
+    "id": "LOG-2CFAE164",
+    "timestamp": "2026-09-04 07:00:43",
+    "action": "Generated synthetic dataset 'synthetic_transactions_100_seed42.csv'",
+    "category": "DATASET",
+    "user": "Analyst",
+    "details": {
+      "records": 100,
+      "fraud_pct": 5.0,
+      "seed": 42
+    },
+    "status": "SUCCESS"
+  },
+  {
+    "id": "LOG-E5399748",
+    "timestamp": "2026-09-04 06:58:06",
+    "action": "Scored transaction TXN-126",
+    "category": "PREDICTION",
+    "user": "Analyst",
+    "details": {
+      "amount": 18.0,
+      "risk_score": 69,
+      "level": "MEDIUM",
+      "model": "Random Forest"
+    },
+    "status": "SUCCESS"
+  },
+  {
+    "id": "LOG-99C7ADBF",
+    "timestamp": "2026-09-04 06:57:53",
+    "action": "Scored transaction TXN-295001",
+    "category": "PREDICTION",
+    "user": "Analyst",
+    "details": {
+      "amount": 185000.0,
+      "risk_score": 99,
+      "level": "HIGH",
+      "model": "Random Forest"
+    },
+    "status": "SUCCESS"
+  },
+  {
+    "id": "LOG-6CF27649",
+    "timestamp": "2026-09-04 06:57:40",
+    "action": "Scored transaction TXN-295001",
+    "category": "PREDICTION",
+    "user": "Analyst",
+    "details": {
+      "amount": 185000.0,
+      "risk_score": 99,
+      "level": "HIGH",
+      "model": "Random Forest"
+    },
+    "status": "SUCCESS"
+  },
+  {
+    "id": "LOG-9DC7ABFD",
+    "timestamp": "2026-09-04 06:57:05",
+    "action": "Updated investigation for TXN-126",
+    "category": "REVIEW",
+    "user": "analyst",
+    "details": {
+      "status": "Investigating",
+      "notes_appended": false
+    },
+    "status": "SUCCESS"
+  },
+  {
+    "id": "LOG-83C8FA0C",
+    "timestamp": "2026-09-04 06:54:26",
+    "action": "Validated dataset 'synthetic_transactions_1200_seed42.csv'",
+    "category": "DATASET",
+    "user": "Analyst",
+    "details": {
+      "valid": true,
+      "passed_checks": 8,
+      "failed_checks": 0
+    },
+    "status": "SUCCESS"
+  },
+  {
+    "id": "LOG-8BB4A05F",
+    "timestamp": "2026-09-04 06:54:25",
+    "action": "Generated synthetic dataset 'synthetic_transactions_1200_seed42.csv'",
+    "category": "DATASET",
+    "user": "Analyst",
+    "details": {
+      "records": 1200,
+      "fraud_pct": 5.5,
+      "seed": 42
+    },
+    "status": "SUCCESS"
+  },
+  {
+    "id": "LOG-8458541C",
+    "timestamp": "2026-09-04 06:54:17",
+    "action": "Validated dataset 'sample_synthetic_transactions.csv'",
+    "category": "DATASET",
+    "user": "Analyst",
+    "details": {
+      "valid": true,
+      "passed_checks": 8,
+      "failed_checks": 0
+    },
+    "status": "SUCCESS"
+  },
+  {
+    "id": "LOG-ED71235B",
+    "timestamp": "2026-09-04 06:54:16",
+    "action": "Validated dataset 'sample_synthetic_transactions.csv'",
+    "category": "DATASET",
+    "user": "Analyst",
+    "details": {
+      "valid": true,
+      "passed_checks": 8,
+      "failed_checks": 0
+    },
+    "status": "SUCCESS"
+  },
+  {
     "id": "LOG-C4063DBA",
     "timestamp": "2026-09-04 06:44:09",
     "action": "Validated dataset 'sample_synthetic_transactions.csv'",

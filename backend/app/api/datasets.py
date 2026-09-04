@@ -75,6 +75,7 @@ def generate_dataset(
         "message": "Synthetic dataset generated successfully",
         "filename": filename,
         "rows": len(df),
+        "records_count": len(df),
         "columns": list(df.columns),
         "fraud_count": int(df["is_fraud"].sum()) if "is_fraud" in df.columns else 0,
         "sample_preview": df.head(5).to_dict(orient="records")

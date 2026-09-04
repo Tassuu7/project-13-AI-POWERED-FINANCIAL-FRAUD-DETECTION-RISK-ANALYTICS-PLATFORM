@@ -38,7 +38,11 @@ async function handleResponse<T>(res: Response): Promise<T> {
     let detail = errorText;
     try {
       const errJson = JSON.parse(errorText);
-      detail = errJson.detail || errJson.message || errorText;
+      if (Array.isArray(errJson.detail)) {
+        detail = errJson.detail.map((d: any) => `${d.loc ? d.loc.slice(-1)[0] : 'field'}: ${d.msg}`).join(', ');
+      } else {
+        detail = errJson.detail || errJson.message || errorText;
+      }
     } catch {
       // Keep plain text
     }

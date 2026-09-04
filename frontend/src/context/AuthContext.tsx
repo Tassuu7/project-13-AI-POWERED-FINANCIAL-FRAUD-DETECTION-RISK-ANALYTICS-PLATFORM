@@ -38,10 +38,20 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
+  // Synchronize user session with localStorage
+  useEffect(() => {
+    if (typeof window !== 'undefined' && user) {
+      localStorage.setItem('aegis_session', JSON.stringify(user));
+    }
+  }, [user]);
+
   const login = async (username: string, password: string, role: UserRole) => {
     setIsLoading(true);
     try {
       const session = await api.login(username, password, role);
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('aegis_session', JSON.stringify(session));
+      }
       setUser(session);
     } catch (e: any) {
       // Local fallback session
@@ -52,7 +62,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         permissions: role === 'Administrator' ? ['all'] : (role === 'Fraud Analyst' ? ['investigate'] : ['read-only']),
         token: `token-${Date.now()}`
       };
-      localStorage.setItem('aegis_session', JSON.stringify(fallback));
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('aegis_session', JSON.stringify(fallback));
+      }
       setUser(fallback);
       throw e;
     } finally {
