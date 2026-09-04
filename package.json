@@ -1,0 +1,26 @@
+{
+  "name": "aegis-fraud-labs",
+  "version": "1.0.0",
+  "description": "AI-Powered Financial Fraud Detection & Risk Analytics Platform",
+  "private": true,
+  "scripts": {
+    "start": "python main.py serve --port 8013",
+    "dev": "concurrently \"python main.py serve --port 8013 --reload\" \"npm --prefix frontend run dev\"",
+    "build": "npm --prefix frontend run build",
+    "server": "uvicorn backend.app.main:app --host 0.0.0.0 --port 8013 --reload",
+    "frontend": "npm --prefix frontend run dev",
+    "test": "python -m pytest -v tests/",
+    "measure": "python measure.py"
+  },
+  "keywords": [
+    "fraud-detection",
+    "risk-analytics",
+    "fintech",
+    "machine-learning",
+    "fastapi",
+    "react",
+    "typescript"
+  ],
+  "author": "Aegis Fraud Labs Team",
+  "license": "UNLICENSED"
+}
