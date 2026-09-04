@@ -4,6 +4,7 @@ from typing import List, Dict, Any
 from pathlib import Path
 from fastapi import APIRouter, UploadFile, File, HTTPException, Depends
 from fastapi.responses import FileResponse
+from datetime import datetime
 import pandas as pd
 
 from backend.app.models.schemas import SyntheticGenerateRequest, DatasetInfo
@@ -62,7 +63,8 @@ def generate_dataset(
 ):
     """Generate reproducible synthetic financial transaction dataset."""
     df = synthetic_generator.generate(req)
-    filename = f"synthetic_transactions_{len(df)}_seed{req.random_seed}.csv"
+    timestamp_str = datetime.now().strftime("%Y%m%d_%H%M%S")
+    filename = f"synthetic_transactions_{len(df)}_seed{req.random_seed}_{timestamp_str}.csv"
     storage_service.save_dataset(filename, df)
 
     history_service.record_action(
@@ -71,14 +73,19 @@ def generate_dataset(
         details={"records": len(df), "fraud_pct": req.fraud_percentage, "seed": req.random_seed}
     )
 
+    records = df.head(25).to_dict(orient="records")
     return {
         "message": "Synthetic dataset generated successfully",
         "filename": filename,
         "rows": len(df),
         "records_count": len(df),
+        "total_rows": len(df),
+        "total_records": len(df),
         "columns": list(df.columns),
         "fraud_count": int(df["is_fraud"].sum()) if "is_fraud" in df.columns else 0,
-        "sample_preview": df.head(5).to_dict(orient="records")
+        "sample_preview": records,
+        "data": records,
+        "preview": records
     }
 
 
@@ -89,7 +96,7 @@ def list_datasets():
 
 
 @router.get("/{filename}/preview")
-def preview_dataset(filename: str, rows: int = 15):
+def preview_dataset(filename: str, rows: int = 25):
     """Get preview rows and column statistics for a dataset."""
     try:
         df = storage_service.load_dataset(filename)
@@ -98,16 +105,19 @@ def preview_dataset(filename: str, rows: int = 15):
 
     has_fraud = "is_fraud" in df.columns
     fraud_cnt = int(df["is_fraud"].sum()) if has_fraud else 0
+    records = df.head(rows).to_dict(orient="records")
 
     return {
         "filename": filename,
         "total_rows": len(df),
+        "total_records": len(df),
         "total_columns": len(df.columns),
         "columns": list(df.columns),
         "has_fraud_label": has_fraud,
         "fraud_count": fraud_cnt,
         "fraud_rate": round(fraud_cnt / len(df) * 100.0, 2) if len(df) > 0 else 0.0,
-        "data": df.head(rows).to_dict(orient="records")
+        "data": records,
+        "preview": records
     }
 
 

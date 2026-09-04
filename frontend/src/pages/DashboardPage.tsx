@@ -72,7 +72,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
       setShowAdminSynthModal(false);
       await refreshDatasets();
       setSelectedDataset(res.filename);
-      await loadTelemetry();
+      await loadTelemetry(res.filename);
     } catch (err: any) {
       showToast(err.message || 'Synthetic data generation failed', 'error');
     } finally {
@@ -80,10 +80,11 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
     }
   };
 
-  const loadTelemetry = async () => {
+  const loadTelemetry = async (datasetName?: string) => {
     setIsLoading(true);
     try {
-      const data = await api.getDashboardTelemetry(selectedDataset);
+      const target = datasetName || selectedDataset;
+      const data = await api.getDashboardTelemetry(target);
       setTelemetry(data);
     } catch (err) {
       console.warn('Dashboard telemetry fetch error:', err);
@@ -120,7 +121,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
             </p>
           </div>
           <div className="flex items-center space-x-3 shrink-0 flex-wrap gap-2">
-            <Button variant="secondary" size="md" icon={RefreshCw} onClick={loadTelemetry} isLoading={isLoading}>
+            <Button variant="secondary" size="md" icon={RefreshCw} onClick={() => loadTelemetry()} isLoading={isLoading}>
               Refresh Telemetry
             </Button>
             <Button

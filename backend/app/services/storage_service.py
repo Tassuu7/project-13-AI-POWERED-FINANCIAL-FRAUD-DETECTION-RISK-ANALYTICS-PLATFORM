@@ -69,6 +69,7 @@ class StorageService:
                 })
             except Exception as e:
                 logger.warning(f"Could not read dataset info for {path.name}: {e}")
+        datasets.sort(key=lambda d: d.get("modified_time", 0), reverse=True)
         return datasets
 
     # --- Model Operations ---
