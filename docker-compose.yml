@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  aegis-platform:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: aegis-fraud-labs
+    ports:
+      - "8013:8013"
+      - "5193:5193"
+    volumes:
+      - ./data:/app/data
+      - ./models:/app/models
+      - ./reports:/app/reports
+      - ./exports:/app/exports
+      - ./logs:/app/logs
+    environment:
+      - PORT=8013
+      - ENVIRONMENT=production
+    restart: unless-stopped

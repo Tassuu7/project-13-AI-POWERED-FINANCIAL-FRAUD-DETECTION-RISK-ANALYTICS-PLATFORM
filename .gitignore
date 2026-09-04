@@ -47,3 +47,12 @@ Thumbs.db
 # Project logs (keep directory, ignore verbose run logs)
 logs/*.log
 !logs/.gitkeep
+
+# Runtime exports and generated test reports
+exports/*.csv
+exports/*.json
+!exports/.gitkeep
+reports/*.html
+reports/*.pdf
+!reports/.gitkeep
+
