@@ -12,6 +12,7 @@ import {
   FileSpreadsheet,
   ArrowRight,
   ShieldCheck,
+  Play,
   X
 } from 'lucide-react';
 import {
@@ -103,8 +104,8 @@ export const TransactionAnalysisPage: React.FC = () => {
     }
   };
 
-  const handleGenerateSynthetic = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleGenerateSynthetic = async (e?: React.FormEvent, customRecords?: number) => {
+    if (e) e.preventDefault();
     if (isViewer) {
       showToast('Viewer accounts cannot generate datasets.', 'error');
       return;
@@ -112,16 +113,21 @@ export const TransactionAnalysisPage: React.FC = () => {
 
     setIsGenerating(true);
     try {
+      const recordsToGen = customRecords || Number(numRecords) || 1000;
       const res = await api.generateSynthetic({
-        num_records: Number(numRecords),
-        fraud_percentage: Number(fraudPct),
-        num_customers: Number(numCustomers),
-        random_seed: Number(randomSeed),
+        num_records: recordsToGen,
+        fraud_percentage: Number(fraudPct) || 5.0,
+        num_customers: Number(numCustomers) || 200,
+        random_seed: Number(randomSeed) || 42,
       });
-      showToast(`Generated: ${res.filename} with ${res.records_count} synthetic transactions`, 'success');
+      const count = res.rows || res.records_count || recordsToGen;
+      showToast(`Generated: ${res.filename} with ${count} synthetic transactions`, 'success');
       setShowSyntheticModal(false);
       await refreshDatasets();
       setSelectedDataset(res.filename);
+      await loadPreview(res.filename);
+      await runValidation(res.filename);
+      await loadEda(res.filename);
     } catch (err: any) {
       showToast(err.message || 'Generation failed', 'error');
     } finally {
@@ -303,16 +309,29 @@ export const TransactionAnalysisPage: React.FC = () => {
                 </div>
               </div>
 
-              <Button
-                variant="primary"
-                size="md"
-                className="w-full text-sm font-bold py-3.5 shadow-lg"
-                icon={Sparkles}
-                disabled={isViewer}
-                onClick={() => setShowSyntheticModal(true)}
-              >
-                Open Generator Studio
-              </Button>
+              <div className="space-y-2.5">
+                <Button
+                  variant="primary"
+                  size="md"
+                  className="w-full text-sm font-bold py-3 shadow-lg"
+                  icon={Sparkles}
+                  disabled={isViewer}
+                  onClick={() => setShowSyntheticModal(true)}
+                >
+                  Configure &amp; Generate Dataset
+                </Button>
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  className="w-full text-xs font-bold py-2 bg-[#0c1017] border border-[#202838] hover:border-emerald-500/50 text-slate-300"
+                  icon={Play}
+                  disabled={isViewer || isGenerating}
+                  onClick={() => handleGenerateSynthetic(undefined, 1000)}
+                  isLoading={isGenerating}
+                >
+                  Quick Generate (1,000 Tx)
+                </Button>
+              </div>
             </div>
           </div>
 

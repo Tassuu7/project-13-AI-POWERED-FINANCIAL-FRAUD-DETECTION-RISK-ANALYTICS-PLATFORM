@@ -27,9 +27,9 @@ class UserSession(BaseModel):
 
 # --- Synthetic Data Generation ---
 class SyntheticGenerateRequest(BaseModel):
-    num_records: int = Field(default=1000, ge=50, le=50000)
-    num_customers: int = Field(default=150, ge=10, le=5000)
-    fraud_percentage: float = Field(default=5.0, ge=0.5, le=40.0)
+    num_records: int = Field(default=1000, ge=10, le=100000)
+    num_customers: int = Field(default=150, ge=2, le=50000)
+    fraud_percentage: float = Field(default=5.0, ge=0.0, le=95.0)
     random_seed: int = Field(default=42, ge=0)
     start_date: Optional[str] = "2025-01-01"
     end_date: Optional[str] = "2025-06-30"

@@ -1,0 +1,101 @@
+transaction_id,customer_id,timestamp,amount,transaction_type,merchant_category,location,device_type,account_age_days,transaction_frequency,previous_transaction_amount,distance_from_usual_location,is_fraud
+TXN-100009,CUST-1015,2025-01-01 15:07:27,547.42,Online,Grocery & Supermarkets,Pune,Trusted Mobile App (iOS),765,3,351.83,5.11,0
+TXN-100015,CUST-1008,2025-01-02 08:14:42,1214.35,POS / In-Store,Dining & Food,Jaipur,Trusted Mobile App (iOS),1496,2,1058.4,1.05,0
+TXN-100058,CUST-1011,2025-01-03 22:06:47,620.47,UPI Transfer,Dining & Food,Mumbai,Trusted Mobile App (iOS),1459,2,485.83,6.84,0
+TXN-100053,CUST-1016,2025-01-04 08:22:57,1214.39,Online,Dining & Food,Kolkata,Trusted Mobile App (iOS),571,1,818.14,1.7,0
+TXN-100019,CUST-1004,2025-01-10 07:05:31,527.86,Online,Healthcare & Medical,Hyderabad,Trusted Mobile App (iOS),1239,1,741.11,29.15,0
+TXN-100037,CUST-1014,2025-01-14 14:06:05,803.57,POS / In-Store,Utilities & Bills,Kochi,Trusted Mobile App (iOS),219,3,791.66,37.27,0
+TXN-100012,CUST-1003,2025-01-17 09:48:26,518.87,POS / In-Store,Dining & Food,Bengaluru,Desktop Web Browser,239,2,692.0,2.7,0
+TXN-100077,CUST-1016,2025-01-18 20:21:13,390.85,UPI Transfer,Healthcare & Medical,Kolkata,Desktop Web Browser,571,2,947.94,2.33,0
+TXN-100025,CUST-1019,2025-01-20 13:32:47,897.0,Online,Utilities & Bills,Delhi,Desktop Web Browser,630,2,561.64,16.83,0
+TXN-100011,CUST-1001,2025-01-22 17:20:28,572.28,Online,Dining & Food,Delhi,Trusted Mobile App (iOS),1548,3,1033.84,15.05,0
+TXN-100027,CUST-1009,2025-01-23 09:56:11,746.54,Online,Utilities & Bills,Jaipur,Trusted Mobile App (Android),481,1,904.26,3.22,0
+TXN-100097,CUST-1019,2025-01-26 01:58:24,130742.39,Online,Crypto & Digital Assets,Kolkata,New Emulated Device,530,7,1886.98,358.5,1
+TXN-100080,CUST-1018,2025-01-26 10:33:57,1791.61,POS / In-Store,Dining & Food,Jaipur,Trusted Mobile App (iOS),805,3,685.17,12.72,0
+TXN-100099,CUST-1015,2025-01-28 02:55:30,271279.92,Wire Transfer,Crypto & Digital Assets,Ahmedabad,Mobile Web Browser,764,11,385.78,826.11,1
+TXN-100092,CUST-1019,2025-01-28 15:29:36,1886.98,UPI Transfer,Dining & Food,Delhi,Desktop Web Browser,630,1,1078.11,0.66,0
+TXN-100043,CUST-1008,2025-01-29 07:57:56,1095.9,UPI Transfer,Dining & Food,Jaipur,Trusted Mobile App (iOS),1496,1,1464.87,13.98,0
+TXN-100022,CUST-1017,2025-01-31 09:54:22,803.18,Online,Healthcare & Medical,Mumbai,Desktop Web Browser,970,1,460.27,10.91,0
+TXN-100029,CUST-1009,2025-02-01 20:35:35,580.9,Online,Grocery & Supermarkets,Jaipur,Trusted Mobile App (Android),481,2,839.54,1.82,0
+TXN-100074,CUST-1002,2025-02-02 16:28:22,784.66,UPI Transfer,Healthcare & Medical,Chennai,Trusted Mobile App (iOS),487,2,618.42,12.55,0
+TXN-100032,CUST-1001,2025-02-04 17:50:52,1778.51,Online,Healthcare & Medical,Hyderabad,Trusted Mobile App (iOS),1548,1,572.28,34.67,0
+TXN-100018,CUST-1008,2025-02-07 21:08:28,907.31,Online,Healthcare & Medical,Jaipur,Trusted Mobile App (iOS),1496,3,1214.35,5.37,0
+TXN-100005,CUST-1011,2025-02-11 19:56:41,247.58,Online,Utilities & Bills,Mumbai,Trusted Mobile App (iOS),1459,3,192.32,8.53,0
+TXN-100016,CUST-1016,2025-02-11 22:15:57,415.97,Online,Healthcare & Medical,Kolkata,Desktop Web Browser,571,2,842.05,14.63,0
+TXN-100033,CUST-1016,2025-02-13 21:22:58,818.14,Online,Dining & Food,Kolkata,Desktop Web Browser,571,2,415.97,14.42,0
+TXN-100024,CUST-1011,2025-02-16 11:42:25,372.16,Online,Healthcare & Medical,Mumbai,Trusted Mobile App (iOS),1459,3,247.58,8.5,0
+TXN-100023,CUST-1019,2025-02-17 08:39:48,561.64,UPI Transfer,Utilities & Bills,Delhi,Desktop Web Browser,630,1,850.05,12.0,0
+TXN-100091,CUST-1005,2025-02-17 12:10:33,2178.3,POS / In-Store,Dining & Food,Pune,Trusted Mobile App (iOS),91,2,1501.87,11.17,0
+TXN-100068,CUST-1002,2025-02-19 00:38:04,618.42,Online,Grocery & Supermarkets,Chennai,Trusted Mobile App (iOS),487,1,598.68,14.89,0
+TXN-100052,CUST-1002,2025-02-20 13:29:58,598.68,UPI Transfer,Utilities & Bills,Chennai,Trusted Mobile App (iOS),487,1,731.74,13.82,0
+TXN-100050,CUST-1008,2025-02-22 07:24:14,860.23,Online,Healthcare & Medical,Jaipur,Trusted Mobile App (iOS),1496,1,477.94,12.38,0
+TXN-100034,CUST-1011,2025-02-24 15:22:03,629.19,Online,Grocery & Supermarkets,Mumbai,Desktop Web Browser,1459,2,372.16,7.49,0
+TXN-100021,CUST-1007,2025-02-27 08:37:31,907.23,Online,Healthcare & Medical,Jaipur,Desktop Web Browser,84,3,834.65,1.57,0
+TXN-100066,CUST-1007,2025-02-27 12:19:30,546.84,Online,Utilities & Bills,Jaipur,Desktop Web Browser,84,3,907.23,9.85,0
+TXN-100039,CUST-1019,2025-02-28 07:19:41,774.5,POS / In-Store,Utilities & Bills,Delhi,Desktop Web Browser,630,2,486.9,8.02,0
+TXN-100081,CUST-1006,2025-03-02 20:05:02,1096.79,Online,Dining & Food,Delhi,Trusted Mobile App (iOS),506,2,894.5,15.22,0
+TXN-100087,CUST-1019,2025-03-06 21:06:26,1078.11,UPI Transfer,Dining & Food,Delhi,Desktop Web Browser,630,1,774.5,8.5,0
+TXN-100041,CUST-1020,2025-03-07 14:43:25,143.14,Online,Dining & Food,Kochi,Trusted Mobile App (Android),1212,2,315.35,14.61,0
+TXN-100093,CUST-1015,2025-03-09 02:27:09,385.78,UPI Transfer,Utilities & Bills,Pune,Trusted Mobile App (iOS),765,1,1072.06,17.34,0
+TXN-100098,CUST-1018,2025-03-13 03:53:10,250968.24,Wire Transfer,Electronics & Gadgets,Bengaluru,New Emulated Device,791,10,1791.61,307.59,1
+TXN-100020,CUST-1006,2025-03-15 19:16:33,1512.86,POS / In-Store,Healthcare & Medical,Ahmedabad,Trusted Mobile App (iOS),506,1,1287.72,35.69,0
+TXN-100086,CUST-1013,2025-03-16 23:15:26,2214.25,Online,Dining & Food,Bengaluru,Trusted Mobile App (iOS),1593,3,1621.8,11.91,0
+TXN-100056,CUST-1013,2025-03-19 00:32:37,2012.64,Online,Grocery & Supermarkets,Bengaluru,Trusted Mobile App (iOS),1593,3,2960.32,10.86,0
+TXN-100017,CUST-1014,2025-03-21 08:43:31,791.66,POS / In-Store,Utilities & Bills,Kolkata,Trusted Mobile App (iOS),219,1,695.41,11.81,0
+TXN-100006,CUST-1019,2025-03-25 04:38:46,850.05,Online,Grocery & Supermarkets,Delhi,Mobile Web Browser,630,1,785.68,4.34,0
+TXN-100014,CUST-1012,2025-03-27 01:41:39,1434.51,Online,Dining & Food,Pune,Trusted Mobile App (Android),599,3,939.86,4.84,0
+TXN-100026,CUST-1006,2025-03-27 16:39:17,1749.88,UPI Transfer,Grocery & Supermarkets,Jaipur,Trusted Mobile App (iOS),506,1,1512.86,20.43,0
+TXN-100040,CUST-1015,2025-03-27 22:50:50,1072.06,Online,Utilities & Bills,Pune,Trusted Mobile App (iOS),765,3,547.42,14.43,0
+TXN-100090,CUST-1004,2025-03-28 16:57:30,394.99,UPI Transfer,Utilities & Bills,Jaipur,Trusted Mobile App (iOS),1239,2,648.78,6.18,0
+TXN-100063,CUST-1016,2025-03-29 09:18:41,947.94,POS / In-Store,Utilities & Bills,Kolkata,Desktop Web Browser,571,2,1214.39,12.61,0
+TXN-100070,CUST-1013,2025-03-29 11:32:58,1189.14,POS / In-Store,Grocery & Supermarkets,Bengaluru,Trusted Mobile App (iOS),1593,3,2012.64,10.8,0
+TXN-100072,CUST-1014,2025-03-29 22:18:57,817.39,UPI Transfer,Grocery & Supermarkets,Kolkata,Trusted Mobile App (iOS),219,3,803.57,5.54,0
+TXN-100100,CUST-1009,2025-03-30 03:43:23,171094.49,Wire Transfer,Crypto & Digital Assets,Chennai,Mobile Web Browser,421,8,877.73,546.73,1
+TXN-100079,CUST-1018,2025-03-31 13:33:56,685.17,Online,Dining & Food,Jaipur,Trusted Mobile App (iOS),805,2,742.48,13.74,0
+TXN-100044,CUST-1017,2025-04-01 14:58:33,491.01,POS / In-Store,Utilities & Bills,Mumbai,Desktop Web Browser,970,2,803.18,8.49,0
+TXN-100049,CUST-1013,2025-04-03 18:19:12,2960.32,POS / In-Store,Dining & Food,Bengaluru,Mobile Web Browser,1593,2,1639.09,15.44,0
+TXN-100061,CUST-1001,2025-04-06 12:31:06,883.77,POS / In-Store,Utilities & Bills,Delhi,Trusted Mobile App (iOS),1548,3,1179.13,14.46,0
+TXN-100028,CUST-1009,2025-04-09 08:05:36,839.54,UPI Transfer,Dining & Food,Jaipur,Trusted Mobile App (Android),481,3,746.54,15.01,0
+TXN-100083,CUST-1020,2025-04-09 11:55:27,402.56,UPI Transfer,Utilities & Bills,Kochi,Trusted Mobile App (Android),1212,1,295.4,14.02,0
+TXN-100082,CUST-1010,2025-04-09 20:53:55,235.91,Online,Healthcare & Medical,Ahmedabad,Desktop Web Browser,599,1,217.38,8.76,0
+TXN-100036,CUST-1020,2025-04-10 13:16:15,315.35,POS / In-Store,Dining & Food,Kochi,Trusted Mobile App (Android),1212,2,408.19,8.13,0
+TXN-100062,CUST-1001,2025-04-11 07:39:26,575.72,Online,Healthcare & Medical,Delhi,Trusted Mobile App (iOS),1548,3,883.77,13.1,0
+TXN-100003,CUST-1006,2025-04-14 12:29:20,1287.72,POS / In-Store,Dining & Food,Delhi,Trusted Mobile App (iOS),506,3,1184.51,17.82,0
+TXN-100064,CUST-1018,2025-04-14 17:22:31,742.48,Online,Dining & Food,Jaipur,Trusted Mobile App (iOS),805,2,668.86,5.24,0
+TXN-100051,CUST-1020,2025-04-14 19:37:47,295.4,Online,Healthcare & Medical,Kochi,Trusted Mobile App (Android),1212,1,423.45,0.97,0
+TXN-100048,CUST-1011,2025-04-16 08:13:04,485.83,POS / In-Store,Grocery & Supermarkets,Mumbai,Trusted Mobile App (iOS),1459,3,385.73,7.32,0
+TXN-100030,CUST-1019,2025-04-18 11:02:12,486.9,Online,Utilities & Bills,Delhi,Desktop Web Browser,630,1,897.0,16.23,0
+TXN-100095,CUST-1001,2025-04-20 08:58:13,1075.88,Online,Utilities & Bills,Delhi,Desktop Web Browser,1548,1,575.72,9.19,0
+TXN-100076,CUST-1009,2025-04-22 12:30:20,877.73,POS / In-Store,Healthcare & Medical,Jaipur,Trusted Mobile App (Android),481,3,580.9,8.24,0
+TXN-100035,CUST-1006,2025-04-23 17:44:39,1368.87,POS / In-Store,Utilities & Bills,Delhi,Trusted Mobile App (iOS),506,2,1749.88,2.4,0
+TXN-100075,CUST-1003,2025-04-27 20:47:10,767.09,POS / In-Store,Grocery & Supermarkets,Bengaluru,Desktop Web Browser,239,3,518.87,4.88,0
+TXN-100055,CUST-1006,2025-04-28 10:49:52,958.32,Online,Utilities & Bills,Delhi,Trusted Mobile App (iOS),506,3,1368.87,17.38,0
+TXN-100054,CUST-1001,2025-05-01 11:30:02,1179.13,POS / In-Store,Utilities & Bills,Delhi,Trusted Mobile App (iOS),1548,2,1778.51,10.37,0
+TXN-100007,CUST-1005,2025-05-02 20:38:37,2314.48,POS / In-Store,Grocery & Supermarkets,Pune,Desktop Web Browser,91,3,1722.54,7.18,0
+TXN-100002,CUST-1015,2025-05-04 12:23:15,351.83,POS / In-Store,Grocery & Supermarkets,Pune,Trusted Mobile App (iOS),765,3,573.34,12.23,0
+TXN-100067,CUST-1005,2025-05-04 22:06:16,977.9,UPI Transfer,Utilities & Bills,Pune,Trusted Mobile App (iOS),91,1,2314.48,10.55,0
+TXN-100038,CUST-1010,2025-05-10 19:44:46,386.85,UPI Transfer,Dining & Food,Ahmedabad,Desktop Web Browser,599,3,185.37,2.73,0
+TXN-100031,CUST-1008,2025-05-10 20:39:05,1464.87,Online,Dining & Food,Jaipur,Trusted Mobile App (iOS),1496,2,907.31,16.7,0
+TXN-100096,CUST-1007,2025-05-12 02:40:40,190909.42,Online,Luxury Goods & Jewelry,Delhi,Mobile Web Browser,80,12,546.84,779.48,1
+TXN-100008,CUST-1004,2025-05-13 09:00:02,741.11,UPI Transfer,Healthcare & Medical,Jaipur,Trusted Mobile App (iOS),1239,1,692.01,13.95,0
+TXN-100001,CUST-1007,2025-05-17 14:49:33,834.65,Online,Healthcare & Medical,Jaipur,Desktop Web Browser,84,2,600.64,1.9,0
+TXN-100084,CUST-1010,2025-05-21 22:55:34,131.02,POS / In-Store,Healthcare & Medical,Ahmedabad,Desktop Web Browser,599,2,235.91,9.93,0
+TXN-100059,CUST-1006,2025-05-23 15:39:02,894.5,UPI Transfer,Utilities & Bills,Delhi,Trusted Mobile App (iOS),506,2,958.32,9.92,0
+TXN-100065,CUST-1004,2025-05-25 12:12:36,693.43,POS / In-Store,Utilities & Bills,Jaipur,Trusted Mobile App (iOS),1239,1,527.86,8.97,0
+TXN-100071,CUST-1004,2025-05-29 13:16:45,648.78,Online,Dining & Food,Jaipur,Trusted Mobile App (iOS),1239,1,693.43,3.25,0
+TXN-100088,CUST-1016,2025-06-01 18:10:18,585.28,UPI Transfer,Healthcare & Medical,Kolkata,Desktop Web Browser,571,2,390.85,12.62,0
+TXN-100078,CUST-1013,2025-06-07 08:29:33,1621.8,UPI Transfer,Grocery & Supermarkets,Bengaluru,Trusted Mobile App (iOS),1593,3,1189.14,4.92,0
+TXN-100069,CUST-1005,2025-06-07 16:05:45,1501.87,POS / In-Store,Dining & Food,Delhi,Trusted Mobile App (iOS),91,3,977.9,50.69,0
+TXN-100045,CUST-1020,2025-06-08 20:53:20,423.45,UPI Transfer,Healthcare & Medical,Kochi,Trusted Mobile App (Android),1212,2,567.08,8.3,0
+TXN-100060,CUST-1008,2025-06-11 07:29:13,928.39,POS / In-Store,Healthcare & Medical,Jaipur,Trusted Mobile App (iOS),1496,2,860.23,8.39,0
+TXN-100004,CUST-1011,2025-06-13 08:14:28,192.32,Online,Dining & Food,Mumbai,Trusted Mobile App (iOS),1459,3,421.16,14.59,0
+TXN-100010,CUST-1010,2025-06-13 13:09:48,185.37,POS / In-Store,Utilities & Bills,Ahmedabad,Trusted Mobile App (iOS),599,2,209.1,3.33,0
+TXN-100046,CUST-1008,2025-06-13 22:40:41,477.94,Online,Utilities & Bills,Jaipur,Trusted Mobile App (iOS),1496,2,1095.9,8.2,0
+TXN-100057,CUST-1010,2025-06-15 10:50:13,217.38,UPI Transfer,Grocery & Supermarkets,Mumbai,Desktop Web Browser,599,3,386.85,39.1,0
+TXN-100094,CUST-1013,2025-06-15 14:24:53,1306.85,Online,Healthcare & Medical,Bengaluru,Desktop Web Browser,1593,2,2214.25,10.56,0
+TXN-100042,CUST-1020,2025-06-15 21:26:52,567.08,UPI Transfer,Healthcare & Medical,Kochi,Trusted Mobile App (Android),1212,2,143.14,10.57,0
+TXN-100085,CUST-1011,2025-06-18 14:36:15,665.24,UPI Transfer,Healthcare & Medical,Mumbai,Trusted Mobile App (iOS),1459,3,620.47,15.48,0
+TXN-100089,CUST-1016,2025-06-19 09:15:58,1475.8,UPI Transfer,Grocery & Supermarkets,Kolkata,Trusted Mobile App (iOS),571,3,585.28,16.62,0
+TXN-100013,CUST-1017,2025-06-19 13:59:57,460.27,UPI Transfer,Healthcare & Medical,Mumbai,Desktop Web Browser,970,3,553.39,13.27,0
+TXN-100047,CUST-1011,2025-06-23 11:09:24,385.73,Online,Healthcare & Medical,Mumbai,Trusted Mobile App (iOS),1459,2,629.19,12.64,0
+TXN-100073,CUST-1008,2025-06-29 13:27:15,2250.68,UPI Transfer,Dining & Food,Jaipur,Trusted Mobile App (iOS),1496,1,928.39,4.43,0

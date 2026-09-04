@@ -24,7 +24,11 @@ import {
   RefreshCw,
   Eye,
   Sliders,
-  Award
+  Award,
+  Sparkles,
+  Play,
+  Database,
+  X
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useAppState } from '../context/AppStateContext';
@@ -38,10 +42,43 @@ interface DashboardPageProps {
 
 export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
   const { user, isAdmin, isAnalyst, isViewer } = useAuth();
-  const { selectedDataset, activeModel } = useAppState();
+  const { selectedDataset, setSelectedDataset, refreshDatasets, activeModel, showToast } = useAppState();
 
   const [telemetry, setTelemetry] = useState<any>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  // Admin Synthetic Data Generator State
+  const [showAdminSynthModal, setShowAdminSynthModal] = useState<boolean>(false);
+  const [isGeneratingSynth, setIsGeneratingSynth] = useState<boolean>(false);
+  const [synthRecords, setSynthRecords] = useState<number>(1200);
+  const [synthFraudPct, setSynthFraudPct] = useState<number>(5.5);
+  const [synthCustomers, setSynthCustomers] = useState<number>(250);
+  const [synthSeed, setSynthSeed] = useState<number>(42);
+
+  const handleAdminGenerateSynthetic = async (e?: React.FormEvent, customRecords?: number, customFraudPct?: number) => {
+    if (e) e.preventDefault();
+    setIsGeneratingSynth(true);
+    try {
+      const recordsToGen = customRecords || Number(synthRecords) || 1000;
+      const fraudToGen = customFraudPct !== undefined ? customFraudPct : (Number(synthFraudPct) || 5.0);
+      const res = await api.generateSynthetic({
+        num_records: recordsToGen,
+        fraud_percentage: fraudToGen,
+        num_customers: Number(synthCustomers) || 200,
+        random_seed: Number(synthSeed) || 42,
+      });
+      const count = res.rows || res.records_count || recordsToGen;
+      showToast(`Successfully generated ${res.filename} with ${count} synthetic transactions!`, 'success');
+      setShowAdminSynthModal(false);
+      await refreshDatasets();
+      setSelectedDataset(res.filename);
+      await loadTelemetry();
+    } catch (err: any) {
+      showToast(err.message || 'Synthetic data generation failed', 'error');
+    } finally {
+      setIsGeneratingSynth(false);
+    }
+  };
 
   const loadTelemetry = async () => {
     setIsLoading(true);
@@ -82,9 +119,19 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
               Complete administrative overview of financial fraud operations, machine learning model telemetry, and system throughput.
             </p>
           </div>
-          <div className="flex items-center space-x-3 shrink-0">
+          <div className="flex items-center space-x-3 shrink-0 flex-wrap gap-2">
             <Button variant="secondary" size="md" icon={RefreshCw} onClick={loadTelemetry} isLoading={isLoading}>
               Refresh Telemetry
+            </Button>
+            <Button
+              variant="secondary"
+              size="md"
+              icon={Sparkles}
+              onClick={() => setShowAdminSynthModal(true)}
+              isLoading={isGeneratingSynth}
+              className="border-emerald-500/40 text-emerald-300 hover:bg-emerald-950/40"
+            >
+              Generate Synthetic Data
             </Button>
             <Button variant="primary" size="md" icon={FileSpreadsheet} onClick={() => onNavigate('analyze')}>
               Transaction Analysis
@@ -133,6 +180,94 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
             subtitle="Production Engine"
             icon={Sliders}
           />
+        </div>
+
+        {/* Administrator Synthetic Dataset Generator Studio */}
+        <div className="w-full bg-[#111622] border border-[#1e2533] rounded-2xl p-6 space-y-5 shadow-md">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-[#1e2533]">
+            <div className="flex items-center space-x-3">
+              <div className="w-10 h-10 rounded-xl bg-emerald-950/80 border border-emerald-500/40 flex items-center justify-center text-emerald-400 shrink-0">
+                <Sparkles className="w-5 h-5" />
+              </div>
+              <div>
+                <h3 className="text-base font-bold text-slate-100 flex items-center space-x-2">
+                  <span>Synthetic Data Generator &amp; Stress-Testing Studio</span>
+                  <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-950 text-emerald-300 border border-emerald-700/60 font-mono">
+                    ADMIN PRIVILEGE
+                  </span>
+                </h3>
+                <p className="text-xs text-slate-300 mt-0.5">
+                  Generate realistic financial transaction records with configurable fraud velocity spikes, nocturnal hours, and impossible travel patterns.
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center space-x-2 shrink-0">
+              <Button
+                variant="secondary"
+                size="sm"
+                icon={Sparkles}
+                onClick={() => setShowAdminSynthModal(true)}
+              >
+                Customize Parameters
+              </Button>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="p-4 rounded-xl bg-[#0b0e14] border border-[#1e2533] flex flex-col justify-between space-y-3">
+              <div>
+                <span className="text-xs font-bold text-emerald-400 uppercase tracking-wider block mb-1">Preset 1: Baseline Flow</span>
+                <h4 className="text-sm font-bold text-slate-200">1,000 Transactions (5% Fraud)</h4>
+                <p className="text-xs text-slate-400 mt-1">Standard retail flow with 50 fraud incidents across 150 customer entities.</p>
+              </div>
+              <Button
+                variant="primary"
+                size="sm"
+                icon={Play}
+                isLoading={isGeneratingSynth}
+                onClick={() => handleAdminGenerateSynthetic(undefined, 1000, 5.0)}
+                className="w-full text-xs font-bold"
+              >
+                Generate 1,000 Tx
+              </Button>
+            </div>
+
+            <div className="p-4 rounded-xl bg-[#0b0e14] border border-[#1e2533] flex flex-col justify-between space-y-3">
+              <div>
+                <span className="text-xs font-bold text-amber-400 uppercase tracking-wider block mb-1">Preset 2: Velocity Surge</span>
+                <h4 className="text-sm font-bold text-slate-200">2,500 Transactions (8% Fraud)</h4>
+                <p className="text-xs text-slate-400 mt-1">Elevated card-not-present burst with 200 high-risk transactions across 300 entities.</p>
+              </div>
+              <Button
+                variant="secondary"
+                size="sm"
+                icon={Play}
+                isLoading={isGeneratingSynth}
+                onClick={() => handleAdminGenerateSynthetic(undefined, 2500, 8.0)}
+                className="w-full text-xs font-bold border-amber-600/40 text-amber-300 hover:bg-amber-950/30"
+              >
+                Generate 2,500 Tx
+              </Button>
+            </div>
+
+            <div className="p-4 rounded-xl bg-[#0b0e14] border border-[#1e2533] flex flex-col justify-between space-y-3">
+              <div>
+                <span className="text-xs font-bold text-rose-400 uppercase tracking-wider block mb-1">Preset 3: Stress Benchmark</span>
+                <h4 className="text-sm font-bold text-slate-200">5,000 Transactions (12% Fraud)</h4>
+                <p className="text-xs text-slate-400 mt-1">Heavy enterprise simulation with 600 complex fraud anomalies for model benchmark.</p>
+              </div>
+              <Button
+                variant="secondary"
+                size="sm"
+                icon={Play}
+                isLoading={isGeneratingSynth}
+                onClick={() => handleAdminGenerateSynthetic(undefined, 5000, 12.0)}
+                className="w-full text-xs font-bold border-rose-600/40 text-rose-300 hover:bg-rose-950/30"
+              >
+                Generate 5,000 Tx
+              </Button>
+            </div>
+          </div>
         </div>
 
         {/* Charts Grid */}
@@ -244,6 +379,76 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
             </table>
           </div>
         </div>
+
+        {/* Administrator Custom Synthetic Data Generator Modal */}
+        {showAdminSynthModal && (
+          <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-6 z-50 animate-in fade-in">
+            <div className="bg-[#111622] border border-[#242e40] rounded-3xl max-w-lg w-full p-8 space-y-6 shadow-2xl">
+              <div className="flex items-center justify-between pb-4 border-b border-[#202838]">
+                <div className="flex items-center space-x-3">
+                  <Sparkles className="w-6 h-6 text-emerald-400" />
+                  <h4 className="text-lg font-bold text-slate-100">
+                    Administrator Data Generator
+                  </h4>
+                </div>
+                <button
+                  onClick={() => setShowAdminSynthModal(false)}
+                  className="text-slate-400 hover:text-slate-200 p-1"
+                >
+                  <X className="w-6 h-6" />
+                </button>
+              </div>
+
+              <form onSubmit={(e) => handleAdminGenerateSynthetic(e)} className="space-y-5 text-sm">
+                <div>
+                  <label className="block text-slate-300 font-bold mb-1.5">Number of Transactions</label>
+                  <input
+                    type="number"
+                    min={100}
+                    max={50000}
+                    value={synthRecords}
+                    onChange={(e) => setSynthRecords(Number(e.target.value))}
+                    className="w-full bg-[#0b0e14] border border-[#202838] rounded-xl px-4 py-2.5 text-slate-100 text-base font-mono focus:border-emerald-500 focus:outline-none"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-slate-300 font-bold mb-1.5">Target Fraud Ratio (%)</label>
+                  <input
+                    type="number"
+                    min={0.5}
+                    max={50}
+                    step="0.1"
+                    value={synthFraudPct}
+                    onChange={(e) => setSynthFraudPct(Number(e.target.value))}
+                    className="w-full bg-[#0b0e14] border border-[#202838] rounded-xl px-4 py-2.5 text-slate-100 text-base font-mono focus:border-emerald-500 focus:outline-none"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-slate-300 font-bold mb-1.5">Unique Customer Accounts</label>
+                  <input
+                    type="number"
+                    min={10}
+                    max={5000}
+                    value={synthCustomers}
+                    onChange={(e) => setSynthCustomers(Number(e.target.value))}
+                    className="w-full bg-[#0b0e14] border border-[#202838] rounded-xl px-4 py-2.5 text-slate-100 text-base font-mono focus:border-emerald-500 focus:outline-none"
+                  />
+                </div>
+
+                <div className="pt-3 flex justify-end space-x-3">
+                  <Button type="button" variant="secondary" onClick={() => setShowAdminSynthModal(false)}>
+                    Cancel
+                  </Button>
+                  <Button type="submit" variant="primary" icon={Sparkles} isLoading={isGeneratingSynth}>
+                    Generate Dataset
+                  </Button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
       </div>
     );
   }
