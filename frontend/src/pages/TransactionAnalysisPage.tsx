@@ -344,7 +344,7 @@ export const TransactionAnalysisPage: React.FC = () => {
                   <span className="text-emerald-400">{selectedDataset}</span>
                 </h4>
                 <span className="text-xs text-slate-400 font-sans">
-                  Showing top {previewData?.preview?.length || 0} sample rows of {previewData?.total_records || 0} total transactions
+                  Showing top {(previewData?.data || previewData?.preview || []).length} sample rows of {(previewData?.total_rows ?? previewData?.total_records ?? (previewData?.data || []).length).toLocaleString()} total transactions
                 </span>
               </div>
 
@@ -359,42 +359,49 @@ export const TransactionAnalysisPage: React.FC = () => {
             </div>
 
             <div className="overflow-x-auto w-full">
-              <table className="w-full text-sm text-left">
-                <thead className="bg-[#0f131c] text-slate-300 font-bold border-b border-[#1e2533]">
-                  <tr>
-                    {previewData?.columns?.map((col: string) => (
-                      <th key={col} className="px-5 py-3.5 whitespace-nowrap text-xs uppercase tracking-wider">
-                        {col}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-[#181f2e] font-mono text-slate-200">
-                  {previewData?.preview?.map((row: any, i: number) => (
-                    <tr key={i} className="hover:bg-[#141c29] transition-colors">
-                      {previewData.columns.map((col: string) => {
-                        const val = row[col];
-                        const isFraudCol = col === 'is_fraud';
-                        return (
-                          <td key={col} className="px-5 py-3 whitespace-nowrap">
-                            {isFraudCol ? (
-                              <span className={`px-2 py-0.5 rounded text-xs font-bold ${
-                                val === 1 || val === '1'
-                                  ? 'bg-rose-950 text-rose-300 border border-rose-700/60'
-                                  : 'bg-emerald-950 text-emerald-300 border border-emerald-700/60'
-                              }`}>
-                                {val === 1 || val === '1' ? 'FRAUD' : 'NORMAL'}
-                              </span>
-                            ) : (
-                              String(val)
-                            )}
-                          </td>
-                        );
-                      })}
+              {(previewData?.data || previewData?.preview || []).length === 0 ? (
+                <div className="p-12 text-center text-slate-400 space-y-2">
+                  <FileSpreadsheet className="w-10 h-10 mx-auto text-slate-600" />
+                  <p className="text-sm">No transaction records found in {selectedDataset}. Click Quick Generate or Upload a dataset.</p>
+                </div>
+              ) : (
+                <table className="w-full text-sm text-left">
+                  <thead className="bg-[#0f131c] text-slate-300 font-bold border-b border-[#1e2533]">
+                    <tr>
+                      {previewData?.columns?.map((col: string) => (
+                        <th key={col} className="px-5 py-3.5 whitespace-nowrap text-xs uppercase tracking-wider">
+                          {col}
+                        </th>
+                      ))}
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody className="divide-y divide-[#181f2e] font-mono text-slate-200">
+                    {(previewData?.data || previewData?.preview || []).map((row: any, i: number) => (
+                      <tr key={i} className="hover:bg-[#141c29] transition-colors">
+                        {previewData.columns.map((col: string) => {
+                          const val = row[col];
+                          const isFraudCol = col === 'is_fraud';
+                          return (
+                            <td key={col} className="px-5 py-3 whitespace-nowrap">
+                              {isFraudCol ? (
+                                <span className={`px-2 py-0.5 rounded text-xs font-bold ${
+                                  val === 1 || val === '1'
+                                    ? 'bg-rose-950 text-rose-300 border border-rose-700/60'
+                                    : 'bg-emerald-950 text-emerald-300 border border-emerald-700/60'
+                                }`}>
+                                  {val === 1 || val === '1' ? 'FRAUD' : 'NORMAL'}
+                                </span>
+                              ) : (
+                                String(val ?? '')
+                              )}
+                            </td>
+                          );
+                        })}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              )}
             </div>
           </div>
         </div>
