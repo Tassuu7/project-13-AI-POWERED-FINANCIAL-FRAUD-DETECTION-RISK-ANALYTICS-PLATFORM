@@ -16,8 +16,9 @@ OUTPUT_PATH_2 = ROOT.parent / OUTPUT_NAME
 
 EXCLUDE_DIRS = {
     "node_modules", "dist", "build", "__pycache__", ".pytest_cache",
-    ".venv", "venv", "env", ".env", ".gemini"
+    ".venv", "venv", "env", ".env", ".gemini", ".git_backup", "scratch"
 }
+
 
 def make_zip(dest_path: Path):
     print(f"Creating archive at: {dest_path}")
