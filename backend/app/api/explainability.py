@@ -1,9 +1,8 @@
 """Model explainability endpoints for global and local fraud factor insights."""
 
 from typing import List, Dict, Any, Optional
-from fastapi import APIRouter, Query
+from fastapi import APIRouter, Query, Body
 from backend.app.services.explainability_service import explainability_service
-from backend.app.models.schemas import SingleTransactionInput
 
 router = APIRouter(prefix="/explainability", tags=["Explainability"])
 
@@ -15,6 +14,8 @@ def get_global_importance(model_name: Optional[str] = Query(None)):
 
 
 @router.post("/local", response_model=List[Dict[str, Any]])
-def explain_transaction(tx: SingleTransactionInput):
+def explain_transaction(payload: Dict[str, Any] = Body(...)):
     """Explain specific positive and negative risk contributors for an individual transaction."""
-    return explainability_service.explain_local_transaction(tx.model_dump())
+    tx_data = payload.get("transaction_data", payload) if isinstance(payload, dict) else {}
+    return explainability_service.explain_local_transaction(tx_data)
+
