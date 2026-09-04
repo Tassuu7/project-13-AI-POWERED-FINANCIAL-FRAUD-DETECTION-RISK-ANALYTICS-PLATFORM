@@ -1,5 +1,18 @@
 [
   {
+    "id": "LOG-C4063DBA",
+    "timestamp": "2026-09-04 06:44:09",
+    "action": "Validated dataset 'sample_synthetic_transactions.csv'",
+    "category": "DATASET",
+    "user": "Analyst",
+    "details": {
+      "valid": true,
+      "passed_checks": 8,
+      "failed_checks": 0
+    },
+    "status": "SUCCESS"
+  },
+  {
     "id": "LOG-974DA1CE",
     "timestamp": "2026-09-03 23:20:17",
     "action": "Scored transaction TXN-295001",
