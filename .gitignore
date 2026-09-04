@@ -56,3 +56,7 @@ reports/*.html
 reports/*.pdf
 !reports/.gitkeep
 
+# Distribution archives and local backups
+*.zip
+.git_backup/
+
